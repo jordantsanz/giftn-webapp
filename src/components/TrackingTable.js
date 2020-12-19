@@ -52,34 +52,20 @@ class TrackingTable extends Component {
   }
 
   render() {
-    const isLoading = this.props.numbers === null;
-    console.log(this.props.numbers);
     return (
-      <main>
+      <div>
         <div className="table-container">
-          <div className="uk-overflow-auto">
-            <table className="table-main">
-              <thead className="left-align">
-                <tr>
-                  <th className="uk-table-shrink">Tracking Number</th>
-                  <th>Friend</th>
-                  <th />
-                  <th className="uk-table-shrink" />
-                </tr>
-              </thead>
-              <tbody className="left-align">
-                {isLoading
-                  ? <tr><td colSpan={6} className="uk-text-center"><em className="uk-text-muted">Loading...</em></td></tr>
-                  : this.props.numbers.map((row) => <TrackingUserTableRow row={row} />)}
-              </tbody>
-            </table>
+          <div className="button-long-div">
+            <div className="button-holder-table">
+              <button className="button" id="send-email-button" type="button">Send Email</button>
+              <button className="button" id="add-tracking-button" type="button">Add Tracking Number</button>
+            </div>
+          </div>
+          <div className="table-holder">
+            {this.props.numbers.map((row) => <TrackingUserTableRow row={row} />)}
           </div>
         </div>
-        <div className="add-people-section">
-          <button className="button" type="button" onClick={this.addNumberReveal}>Add Number</button>
-          {this.addNumberSectionRender()}
-        </div>
-      </main>
+      </div>
     );
   }
 }

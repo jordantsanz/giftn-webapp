@@ -13,7 +13,10 @@ $seafoamgrinch: #81D7AD;
 $white: #FFF5F5;
 $coal: #0E0B0B;
 
-
+a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
 
 
 body{
@@ -55,6 +58,8 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
+position: relative;
+z-index: 3;
 
 background: $navynight;
 border-radius: 0px 0px 60px 60px;
@@ -153,7 +158,103 @@ text-align: center;
     position: absolute;
     height: 100%;
     width: 100%;
+    z-index: -1000;
 }
+
+.page-holder{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    background-color: $noblefir;
+}
+
+.page-upper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.home-center-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20vh;
+}
+
+.home-center-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.home-title{
+    font-family: $abril;
+font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 49px;
+text-align: center;
+letter-spacing: 0.03em;
+width: 647px;
+height: 101px;
+margin-bottom: 28px;
+
+
+/* rosy cheeks */
+
+color: #FF77E1;
+}
+
+.home-subtitle-1, .home-subtitle-2{
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+width: 375px;
+align-items: center;
+text-align: center;
+margin-bottom: 35px;
+
+/* rosy cheeks */
+
+color: #FF77E1;
+}
+
+.login-button-home{
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: inline-flex;
+align-items: center; 
+justify-content: center;
+
+/* noble fir */
+
+color: $noblefir;
+background-color: $goldenrings;
+width: 177px;
+height: 37px;
+text-align: center;
+}
+
+.home-center-right{
+    width: 500px;
+}
+
+
 
 
 /******************* budgetHub *************************/ 
@@ -163,19 +264,25 @@ text-align: center;
     justify-content: center;
     align-items: center;
 }
+.homepage-outer{
+    background-color: $rosy;
+    z-index: -900;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
 main { margin: auto; max-width: 960px; }
 
 .table-container {
-  margin: 10px;
   padding: 0;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  width: 64vw;
+  width: 100%;
 }
 
 tr.expandable > td {
-  box-shadow: inset 0 3px 6px -3px rgba(0, 0, 0, .2);
   padding: 0;
 }
 
@@ -192,8 +299,90 @@ tr.expandable > td > .inner {
     text-align: left;
 }
 
+#add-gift-button{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+width: 92.2px;
+height: 38.6px;
+left: 1139px;
+top: 681px;
+
+/* white as winter snow */
+
+background: #FFF5F5;
+/* rudolph */
+
+border: 2px solid #F35849;
+box-sizing: border-box;
+border-radius: 10px;
+
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* rudolph */
+
+color: #F35849;
+
+}
+
+#add-person-button{
+    margin-right: 24px;
+    width: 112px;
+height: 38px;
+/* rudolph */
+
+background: #F35849;
+/* white as winter snow */
+
+border: 2px solid #FFF5F5;
+box-sizing: border-box;
+border-radius: 10px;
+
+font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+
+}
+
 .left-align{
     text-align: left;
+}
+
+.table-holder{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+}
+
+.button-div{
+    width: 960px;
+}
+
+.button-holder-table{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .gauge-holders{
@@ -214,14 +403,18 @@ tr.expandable > td > .inner {
 
 .name-row{
     width: 960px;
-height: 56px;
-left: 262px;
-top: 735px;
-border-radius: 10px;
+    height: 56px;
+    left: 262px;
+    top: 735px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 
 /* navy night */
 
-background: $navynight;
+    background: $navynight;
 }
 
 table { 
@@ -239,8 +432,249 @@ border: none;
 line-height: 24px;
 display: flex;
 align-items: center;
+width: 34vw;
 
 /* white as winter snow */
 
 color: #FFF5F5;
 }
+
+.expandable{
+    width: 960px;
+    width: 960px;
+    left: 262px;
+    top: 735px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.gift-row-flex{
+    width: 960px;
+    height: 56px;
+    left: 262px;
+    top: 735px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+/* white as winter snow */
+
+background: #FFF5F5;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.gift-outer{
+    width: 34vw;
+    display: flex;
+    align-items: center;
+}
+
+.gift-name{
+    font-family: $josefin;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    border: none;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+
+
+color: #0E0B0B;
+}
+
+.total, .gift-price{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 24px;
+display: flex;
+align-items: center;
+text-align: right;
+width: 20vw;
+
+/* seafoam grinch */
+
+color: $seafoamgrinch;
+}
+
+.button-cell, .buttons-cell{
+    width: 6vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.trash{
+    color:  #F5DA77;
+}
+
+.trash-red{
+    color: $rudolph;
+}
+
+/**************************** tracking hub page holder ************************/
+#tracking-hub-page-holder{
+    display: flex;
+    flex-direction: column;
+    z-index: -999;
+    position: absolute;
+    align-items: center;
+    width: 100%;
+    background-color: $seafoamgrinch;
+    min-height: 100%;
+}
+
+.title-pink{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 16px;
+position: relative;
+
+width: 250px;
+color: $rosy;
+font-family: $abril;
+font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 49px;
+/* identical to box height */
+
+text-align: center;
+letter-spacing: 0.03em;
+margin-top: 73px;
+
+/* rosy cheeks */
+
+color: #FF77E1;
+/* noble fir */
+
+background: #023535;
+/* white as winter snow */
+
+border: 4px solid #FFF5F5;
+box-sizing: border-box;
+}
+
+.title-pink:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 171.82px;
+    height: 56.56px;
+    z-index: -1;
+    background: $rosy;
+    -webkit-transform: rotate(12.57deg);
+    -moz-transform: rotate(12.57deg);
+    -o-transform: rotate(12.57deg);
+    -ms-transform: rotate(12.57deg);
+    transform: rotate(12.57deg);
+    transform: rotate(12.57deg);
+}
+
+#send-email-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    
+    width: 114px;
+    height: 36px;
+    
+    /* navy night */
+    
+    background: #002863;
+    /* white as winter snow */
+    
+    border: 2px solid #FFF5F5;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+#add-tracking-button{
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+width: 203.16px;
+height: 35.58px;
+
+/* white as winter snow */
+
+background: #FFF5F5;
+font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+/* navy night */
+
+border: 2px solid #002863;
+box-sizing: border-box;
+border-radius: 10px;
+}
+
+
+.friend-cell{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 24px;
+display: flex;
+align-items: center;
+
+/* five golden rings */
+
+color: #F5DA77;
+width: 10vw;
+}
+
+
+/************************ Budget page ****************/
+.page-holder-outer{
+    background-color: $rudolph;
+    position: absolute;
+    width: 100%;
+    z-index: -100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100%;
+    justify-content: space-around;
+}
+

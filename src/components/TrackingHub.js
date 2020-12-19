@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TrackingTable from './TrackingTable';
+import NavBar from './NavBar';
 
 const numbers = [
   {
@@ -36,7 +37,9 @@ class TrackingHub extends Component {
 
   render() {
     return (
-      <div className="page-holder">
+      <div className="page-holder" id="tracking-hub-page-holder">
+        <NavBar />
+        <div className="title-pink">Your Packages</div>
         <TrackingTable numbers={numbers} />
       </div>
     );

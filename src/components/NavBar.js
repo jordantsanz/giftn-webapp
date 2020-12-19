@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import Login from './Login';
 import Logout from './Logout';
 
@@ -12,7 +13,7 @@ class NavBar extends Component {
         );
       } else {
         return (
-          <Login />
+          <Login class="transparent red nav-item" text="Sign in" />
         );
       }
     }
@@ -20,10 +21,16 @@ class NavBar extends Component {
     render() {
       return (
         <div className="nav-holder">
-          <div className="logo">logo </div>
+          <NavLink to="/">
+            <div className="logo">logo </div>
+          </NavLink>
           <div className="right-side">
-            <div className="nav-item white" id="gift-list">Gift list</div>
-            <div className="nav-item white" id="package-tracker">Package tracker</div>
+            <NavLink to="/budget">
+              <div className="nav-item white" id="gift-list">Gift list</div>
+            </NavLink>
+            <NavLink to="/tracking">
+              <div className="nav-item white" id="package-tracker">Package tracker</div>
+            </NavLink>
             {this.checkLog()}
           </div>
         </div>

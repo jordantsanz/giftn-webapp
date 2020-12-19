@@ -54,26 +54,20 @@ class BudgetTable extends Component {
   }
 
   render() {
-    const isLoading = this.props.people === null;
-    console.log(this.props.people);
     return (
-      <main>
+      <div>
         <div className="table-container">
-          <div className="uk-overflow-auto">
-            <table className="table-main">
-              <tbody className="left-align">
-                {isLoading
-                  ? <tr><td colSpan={6} className="uk-text-center"><em className="uk-text-muted">Loading...</em></td></tr>
-                  : this.props.people.map((person) => <BudgetUserTableRow person={person} />)}
-              </tbody>
-            </table>
+          <div className="button-long-div">
+            <div className="button-holder-table">
+              <button className="button" id="add-person-button" type="button">Add Person</button>
+              <button className="button" id="add-gift-button" type="button">Add Gift</button>
+            </div>
+          </div>
+          <div className="table-holder">
+            {this.props.people.map((person) => <BudgetUserTableRow person={person} />)}
           </div>
         </div>
-        <div className="add-people-section">
-          <button className="button" type="button" onClick={this.addPersonReveal}>Add person</button>
-          {this.addPersonSectionRender()}
-        </div>
-      </main>
+      </div>
     );
   }
 }

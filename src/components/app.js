@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Home from './Home';
 import TrackingHub from './TrackingHub';
 import BudgetHub from './BudgetHub';
+import ChooseBudget from './ChooseBudget';
 
 const App = (props) => {
   return (
@@ -18,6 +19,7 @@ const App = (props) => {
             <Switch location={location}>
               <Route exact path="/" component={Home} />
               <Route path="/budget" component={BudgetHub} />
+              <Route path="/choosebudget" component={ChooseBudget} />
               <Route path="/tracking" component={TrackingHub} />
             </Switch>
           </CSSTransition>

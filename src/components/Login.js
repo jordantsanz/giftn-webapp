@@ -25,6 +25,7 @@ const refreshTokenSetup = (res) => {
 class Login extends Component {
     onSuccess = (res) => {
       console.log('[Login Success] currentUser:', res.profileObj);
+      this.props.history.push('/choosebudget');
 
       refreshTokenSetup(res);
       this.props.logInUser(res.profileObj);
@@ -39,7 +40,7 @@ class Login extends Component {
         <div>
           <GoogleLogin
             render={(renderProps) => (
-              <div role="button" type="button" className="transparent red nav-item" onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign in</div>
+              <div role="button" type="button" className={this.props.class} onClick={renderProps.onClick} disabled={renderProps.disabled}>{this.props.text}</div>
             )}
             clientId={clientId}
             buttonText="Login"

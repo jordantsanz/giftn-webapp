@@ -206,6 +206,7 @@ class BudgetHub extends Component {
               {
                 giftName: 'Dildo',
                 price: 500,
+                giftAvailability: 1,
               },
             ],
           },
@@ -215,6 +216,7 @@ class BudgetHub extends Component {
               {
                 giftName: 'your mom',
                 price: 2000,
+                giftAvailability: 0,
               },
             ],
           },

@@ -1,9 +1,13 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/no-string-refs */
 import React from 'react';
-import { slideDown, slideUp } from './anim';
+
 import '../style.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { slideDown, slideUp } from './anim';
 
 class TrackingUserTableRow extends React.Component {
   constructor(props) {
@@ -61,59 +65,50 @@ class TrackingUserTableRow extends React.Component {
     }
   }
 
+  // displays gifts when the row is expanded
   renderGifts = () => {
     return this.props.row.giftInfo.map((giftInfo) => {
-      console.log(giftInfo);
       return (
-        <tr id={giftInfo.id}>
-          <td>{giftInfo.giftName}</td>
-          <td>{giftInfo.price}</td>
-          <td>pic</td>
-          <td>
-            <button className="button"
-              id="delete"
-              type="button"
-              onClick={(e) => {
+        <div className="gift-row-flex">
+          <div className="gift-outer">
+            <div className="gift-pic">pic</div>
+            <div className="gift-name">{giftInfo.giftName} {giftInfo.giftAvailability}</div>
+          </div>
+          <div className="gift-price">${giftInfo.price}</div>
+          <div className="button-cell">
+            <FontAwesomeIcon icon={faTrash} className="trash-red" />
+            <div className="checkbox-div"><input className="uk-checkbox"
+              type="checkbox"
+              onChange={(e) => {
                 this.clickMe(e, giftInfo.id);
               }}
-            >
-              Delete Gift
-            </button>
-          </td>
-        </tr>
+            />
+            </div>
+          </div>
+        </div>
       );
     });
   }
 
   render() {
     return [
-      <tr key="main" onClick={this.toggleExpander}>
-        <td>{this.props.row.number}</td>
-        <td className="uk-text-nowrap">{this.props.row.friend}</td>
+      <div className="name-row" key="main" onClick={this.toggleExpander}>
+        <div className="name-cell">{this.props.row.number}</div>
+        <div className="friend-cell">{this.props.row.friend}</div>
         {/* <td><img className="uk-preserve-width uk-border-circle" src={user.picture.thumbnail} width={48} alt="avatar" /></td> */}
-        <td>
-          <button type="button" onClick={this.addGift}>Add gift</button>
-        </td>
-      </tr>,
+        <div className="buttons-cell">
+          <FontAwesomeIcon icon={faTrash} className="trash" />
+          <FontAwesomeIcon icon={faChevronDown} className="trash" />
+        </div>
+      </div>,
       this.state.expanded && (
-        <tr className="expandable" key="tr-expander">
-          <td className="uk-background-muted" colSpan={6}>
-            <div ref="expanderBody" className="inner table-main">
-              <table className="table-main">
-                <thead className="inner-table" id="inner-table-head">
-                  <tr>
-                    <th>Gift Name</th>
-                    <th>Price</th>
-                    <th>Picture</th>
-                  </tr>
-                </thead>
-                <tbody className="inner-table" id="inner-table-body">
-                  {this.renderGifts()}
-                </tbody>
-              </table>
+        <div className="expandable" key="tr-expander">
+          <div ref="expanderBody" className="inner table-main">
+            <div className="inner-table" id="inner-table-body">
+              {this.renderGifts()}
             </div>
-          </td>
-        </tr>
+          </div>
+        </div>
       ),
     ];
   }
