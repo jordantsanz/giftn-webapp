@@ -13,7 +13,7 @@ class Logout extends Component {
       <div>
         <GoogleLogout
           render={(renderProps) => (
-            <button type="button" className="button-dark" onClick={renderProps.onClick} disabled={renderProps.disabled}>Log Out</button>
+            <div type="button" className="transparent red nav-item" role="button" onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign out</div>
           )}
           clientId={clientId}
           buttonText="Logout"

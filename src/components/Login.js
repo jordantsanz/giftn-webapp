@@ -39,7 +39,7 @@ class Login extends Component {
         <div>
           <GoogleLogin
             render={(renderProps) => (
-              <button type="button" className="button-dark" onClick={renderProps.onClick} disabled={renderProps.disabled}>Log in</button>
+              <div role="button" type="button" className="transparent red nav-item" onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign in</div>
             )}
             clientId={clientId}
             buttonText="Login"

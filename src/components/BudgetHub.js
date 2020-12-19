@@ -7,23 +7,8 @@ import { connect } from 'react-redux';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 // import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-import Login from './Login';
-import Logout from './Logout';
 import BudgetTable from './BudgetTable';
-
-// function createData(person, total, giftInfo) {
-//   return {
-//     person,
-//     total,
-//     giftInfo,
-//   };
-// }
-// const rows = [
-//   createData('Wylie', 159, [{ giftName: 'dildo', price: 69.96 }]),
-//   createData('Jordan', 159, [{ giftName: 'dildo', price: 69.96 }]),
-//   createData('Sathvi', 159, [{ giftName: 'dildo', price: 69.96 }]),
-//   createData('Catherine', 159, [{ giftName: 'dildo', price: 69.96 }]),
-// ];
+import NavBar from './NavBar';
 
 const people = [
   {
@@ -53,26 +38,165 @@ class BudgetHub extends Component {
     super(props);
     this.state = {
       gauge: false,
+      gauge2: false,
     };
+  }
+
+  componentDidMount() {
+    this.makeGauge();
+    this.makeGauge2();
   }
 
   componentWillUnmount() {
     if (this.chart) {
       this.chart.dispose();
     }
+    if (this.chart2) {
+      this.chart2.dispose();
+    }
   }
 
-    checkLog = () => {
-      if (this.props.name != '') {
-        return (
-          <Logout />
-        );
-      } else {
-        return (
-          <Login />
-        );
+    makeGauge2 = (peopleList, totalBudget) => {
+      const thePeople = [
+        {
+          name: 'Wylie',
+          giftInfo: [
+            {
+              giftName: 'Dildo',
+              price: 500,
+              bought: false,
+            },
+          ],
+        },
+        {
+          name: 'Jordan',
+          giftInfo: [
+            {
+              giftName: 'your mom',
+              price: 2000,
+              bought: true,
+            },
+          ],
+        },
+      ];
+      if (!this.state.gauge) {
+        // Create chart
+        let total = 0;
+        console.log(total);
+        for (let i = 0; i < thePeople.length; i++) {
+          console.log('i', i);
+          const { giftInfo } = thePeople[i];
+          for (let j = 0; j < giftInfo.length; j++) {
+            if (giftInfo[j].bought) {
+              total += giftInfo[j].price;
+            }
+          }
+        }
+
+        console.log(total);
+
+        const percent = Math.round((total / 3000) * 100);
+        const chart = am4core.create('chartdiv2', am4charts.GaugeChart);
+        chart.innerRadius = am4core.percent(82);
+
+        /**
+         * Normal axis
+         */
+
+        const axis = chart.xAxes.push(new am4charts.ValueAxis());
+        axis.min = 0;
+        axis.max = 100;
+        axis.strictMinMax = true;
+        axis.renderer.radius = am4core.percent(80);
+        axis.renderer.inside = true;
+        axis.renderer.line.strokeOpacity = 1;
+        axis.renderer.ticks.template.disabled = false;
+        axis.renderer.ticks.template.strokeOpacity = 1;
+        axis.renderer.ticks.template.length = 10;
+        axis.renderer.grid.template.disabled = true;
+        axis.renderer.labels.template.radius = 30;
+        axis.renderer.labels.template.fontSize = 10;
+        axis.renderer.labels.template.adapter.add('text', (text) => {
+          return `${text}%`;
+        });
+
+        /**
+         * Axis for ranges
+         */
+
+        // eslint-disable-next-line no-unused-vars
+        const colorSet = new am4core.ColorSet();
+
+        const axis2 = chart.xAxes.push(new am4charts.ValueAxis());
+        axis2.min = 0;
+        axis2.max = 100;
+        axis2.strictMinMax = true;
+        axis2.renderer.labels.template.disabled = true;
+        axis2.renderer.ticks.template.disabled = true;
+        axis2.renderer.grid.template.disabled = true;
+
+        const range0 = axis2.axisRanges.create();
+        range0.value = 0;
+        range0.endValue = 50;
+        range0.axisFill.fillOpacity = 1;
+        range0.axisFill.fill = am4core.color('#00FF19');
+
+        const range1 = axis2.axisRanges.create();
+        range1.value = 50;
+        range1.endValue = 100;
+        range1.axisFill.fillOpacity = 1;
+        range1.axisFill.fill = am4core.color('#7000FF');
+
+        /**
+         * Label
+         */
+        const hand = chart.hands.push(new am4charts.ClockHand());
+        hand.axis = axis2;
+        hand.innerRadius = am4core.percent(25);
+        hand.startWidth = 10;
+        hand.pin.disabled = true;
+        hand.value = percent;
+
+        const label = chart.radarContainer.createChild(am4core.Label);
+        label.isMeasured = false;
+        label.fontSize = 15;
+        label.x = am4core.percent(50);
+        label.y = am4core.percent(100);
+        label.horizontalCenter = 'middle';
+        label.verticalCenter = 'bottom';
+        label.text = `${hand.value}%`;
+
+        /**
+         * Hand
+         */
+
+        hand.events.on('propertychanged', (ev) => {
+          range0.endValue = ev.target.value;
+          range1.value = ev.target.value;
+          label.text = `${axis2.positionToValue(hand.currentPosition).toFixed(1)}%`;
+          axis2.invalidate();
+        });
+
+        const title = chart.titles.create();
+        title.text = 'Budget Spent';
+        title.marginBottom = 30;
+        title.fontSize = 15;
+        title.marginTop = 30;
+        title.fontFamily = 'Roboto';
+        title.fill = '#000000';
+        title.padding(10, 10, 10, 10);
+
+        const label2 = chart.chartContainer.createChild(am4core.Label);
+        label2.text = '*Percentage of unique websites visited that are green';
+        label2.align = 'right';
+
+        this.chart2 = chart;
+
+        this.setState({
+          gauge2: true,
+        });
       }
-    }
+    };
 
       makeGauge = (peopleList, totalBudget) => {
         const thePeople = [
@@ -81,7 +205,7 @@ class BudgetHub extends Component {
             giftInfo: [
               {
                 giftName: 'Dildo',
-                price: 20,
+                price: 500,
               },
             ],
           },
@@ -129,7 +253,8 @@ class BudgetHub extends Component {
           axis.renderer.ticks.template.strokeOpacity = 1;
           axis.renderer.ticks.template.length = 10;
           axis.renderer.grid.template.disabled = true;
-          axis.renderer.labels.template.radius = 60;
+          axis.renderer.labels.template.radius = 30;
+          axis.renderer.labels.template.fontSize = 10;
           axis.renderer.labels.template.adapter.add('text', (text) => {
             return `${text}%`;
           });
@@ -173,7 +298,7 @@ class BudgetHub extends Component {
 
           const label = chart.radarContainer.createChild(am4core.Label);
           label.isMeasured = false;
-          label.fontSize = 45;
+          label.fontSize = 15;
           label.x = am4core.percent(50);
           label.y = am4core.percent(100);
           label.horizontalCenter = 'middle';
@@ -194,7 +319,7 @@ class BudgetHub extends Component {
           const title = chart.titles.create();
           title.text = 'Budget Spent';
           title.marginBottom = 30;
-          title.fontSize = 25;
+          title.fontSize = 10;
           title.marginTop = 30;
           title.fontFamily = 'Roboto';
           title.fill = '#000000';
@@ -204,7 +329,7 @@ class BudgetHub extends Component {
           label2.text = '*Percentage of unique websites visited that are green';
           label2.align = 'right';
 
-          this.chart2 = chart;
+          this.chart3 = chart;
 
           this.setState({
             gauge: true,
@@ -213,13 +338,20 @@ class BudgetHub extends Component {
       };
 
       render() {
-        this.makeGauge(people, 3000);
         return (
           <div className="homepage-outer">
-            <div className="hello">Hello!</div>
-            <div className="chartdiv" id="chartdiv" />
-            <BudgetTable people={people} />
-            {this.checkLog()}
+            <NavBar />
+            <div className="budget-section">
+              <h1 className="title">Budget</h1>
+              <div className="gauge-holders">
+                <div className="chartdiv" id="chartdiv" />
+                <div className="chartdiv2" id="chartdiv2" />
+              </div>
+            </div>
+            <div className="gift-section">
+              <h1 className="title">Gift List</h1>
+              <BudgetTable people={people} />
+            </div>
           </div>
         );
       }

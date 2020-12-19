@@ -61,14 +61,6 @@ class BudgetTable extends Component {
         <div className="table-container">
           <div className="uk-overflow-auto">
             <table className="table-main">
-              <thead className="left-align">
-                <tr>
-                  <th className="uk-table-shrink">Name</th>
-                  <th>Total</th>
-                  <th />
-                  <th className="uk-table-shrink" />
-                </tr>
-              </thead>
               <tbody className="left-align">
                 {isLoading
                   ? <tr><td colSpan={6} className="uk-text-center"><em className="uk-text-muted">Loading...</em></td></tr>

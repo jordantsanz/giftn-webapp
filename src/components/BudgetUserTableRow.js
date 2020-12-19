@@ -109,8 +109,8 @@ class BudgetUserTableRow extends React.Component {
   // renders the component
   render() {
     return [
-      <tr key="main" onClick={this.toggleExpander}>
-        <td>{this.props.person.name}</td>
+      <tr className="name-row" key="main" onClick={this.toggleExpander}>
+        <td className="name-cell">{this.props.person.name}</td>
         <td className="uk-text-nowrap">{this.calculateTotal()}</td>
         <td>
           <button type="button" onClick={this.addGift}>Add gift</button>

@@ -1,9 +1,18 @@
 
 /****************** variables ******************/
-$purple: #7000FF;
-$green: lime;
-$aclon: 'Aclonica', sans-serif;
-$libre: 'Libre Franklin', sans-serif;
+
+$josefin: 'Josefin Sans', sans-serif;
+$abril: 'Abril Fatface', cursive;
+
+$navynight: #002863;
+$rudolph: #F35849;
+$rosy: #FF77E1;
+$goldenrings: #F5DA77;
+$noblefir: #023535;
+$seafoamgrinch: #81D7AD;
+$white: #FFF5F5;
+$coal: #0E0B0B;
+
 
 
 
@@ -14,6 +23,7 @@ body{
     width: 100%;
     margin: 0px;
     padding: 0px;
+    font-family: $josefin;
 }
 
 
@@ -36,6 +46,106 @@ body{
     transition: opacity 150ms linear;
   }
 
+/******************** NavBar ***********************/
+
+.nav-holder{
+width: 100%;
+height: 87px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+
+background: $navynight;
+border-radius: 0px 0px 60px 60px;
+}
+
+.title{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 16px;
+position: relative;
+
+width: 167px;
+height: 66px;
+color: #81D7AD;
+font-family: $abril;
+/* noble fir */
+
+background: #023535;
+/* white as winter snow */
+
+border: 4px solid #FFF5F5;
+box-sizing: border-box;
+}
+
+.title:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 171.82px;
+    height: 56.56px;
+    z-index: -1;
+    background: #81D7AD;
+    -webkit-transform: rotate(12.57deg);
+    -moz-transform: rotate(12.57deg);
+    -o-transform: rotate(12.57deg);
+    -ms-transform: rotate(12.57deg);
+    transform: rotate(12.57deg);
+    transform: rotate(12.57deg);
+}
+
+.logo{
+    margin-left: 20px;
+    font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 52px;
+display: flex;
+align-items: center;
+}
+
+.right-side{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 36.1vw;
+    margin-right: 20px;
+}
+
+.nav-item{
+    cursor: pointer;
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 24px;
+display: flex;
+align-items: center;
+text-align: center;
+}
+
+.white{
+    color: $white;
+    font-family: $josefin;
+}
+
+.transparent{
+    background: transparent;
+}
+
+.red{
+    color: $rudolph;
+    font-family: $josefin;
+}
+
+
 /********************* Home page *******************/ 
 
 
@@ -44,6 +154,16 @@ body{
     height: 100%;
     width: 100%;
 }
+
+
+/******************* budgetHub *************************/ 
+.budget-section, .gift-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 main { margin: auto; max-width: 960px; }
 
 .table-container {
@@ -51,6 +171,7 @@ main { margin: auto; max-width: 960px; }
   padding: 0;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
+  width: 64vw;
 }
 
 tr.expandable > td {
@@ -75,12 +196,51 @@ tr.expandable > td > .inner {
     text-align: left;
 }
 
-#chartdiv, #chartdiv3, #chartdiv4{
+.gauge-holders{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#chartdiv, #chartdiv2{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     margin: 20px;
-    width: 700px;
-    height: 500px;
+    width: 400px;
+    height: 300px;
+}
+
+.name-row{
+    width: 960px;
+height: 56px;
+left: 262px;
+top: 735px;
+border-radius: 10px;
+
+/* navy night */
+
+background: $navynight;
+}
+
+table { 
+    border-collapse: collapse;
+    width: 960px;
+    border-spacing: 0 1em;
+    border-color: transparent; }
+
+.name-cell{
+font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+border: none;
+line-height: 24px;
+display: flex;
+align-items: center;
+
+/* white as winter snow */
+
+color: #FFF5F5;
 }
