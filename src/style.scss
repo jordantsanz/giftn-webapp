@@ -1,0 +1,25 @@
+
+/****************** variables ******************/
+$purple: #7000FF;
+$green: lime;
+$aclon: 'Aclonica', sans-serif;
+$libre: 'Libre Franklin', sans-serif;
+
+
+
+body{
+    color: red;
+    height: 100%;
+    box-sizing: content-box;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Libre Franklin', sans-serif;
+}
+
+
+#main{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
