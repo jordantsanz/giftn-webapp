@@ -25,7 +25,10 @@ const refreshTokenSetup = (res) => {
 class Login extends Component {
     onSuccess = (res) => {
       console.log('[Login Success] currentUser:', res.profileObj);
-      this.props.history.push('/choosebudget');
+
+      if (this.props.fromHome) {
+        this.props.history.push('/choosebudget');
+      }
 
       refreshTokenSetup(res);
       this.props.logInUser(res.profileObj);

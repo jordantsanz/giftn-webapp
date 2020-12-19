@@ -99,7 +99,7 @@ class BudgetUserTableRow extends React.Component {
           <div className="gift-price">${giftInfo.price}</div>
           <div className="button-cell">
             <FontAwesomeIcon icon={faTrash} className="trash-red" />
-            <div className="checkbox-div"><input className="uk-checkbox"
+            <div className="checkbox-div"><input className="checkbox"
               type="checkbox"
               onChange={(e) => {
                 this.clickMe(e, giftInfo.id);

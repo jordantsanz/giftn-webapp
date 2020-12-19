@@ -6,7 +6,7 @@ import React from 'react';
 
 import '../style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { slideDown, slideUp } from './anim';
 
 class TrackingUserTableRow extends React.Component {
@@ -65,6 +65,10 @@ class TrackingUserTableRow extends React.Component {
     }
   }
 
+  //   clickMe = (e, id) => {
+
+  //   }
+
   // displays gifts when the row is expanded
   renderGifts = () => {
     return this.props.row.giftInfo.map((giftInfo) => {
@@ -98,7 +102,12 @@ class TrackingUserTableRow extends React.Component {
         {/* <td><img className="uk-preserve-width uk-border-circle" src={user.picture.thumbnail} width={48} alt="avatar" /></td> */}
         <div className="buttons-cell">
           <FontAwesomeIcon icon={faTrash} className="trash" />
-          <FontAwesomeIcon icon={faChevronDown} className="trash" />
+          <input className="checkbox"
+            type="checkbox"
+            onChange={(e) => {
+              this.clickMe(e, this.props.row.id);
+            }}
+          />
         </div>
       </div>,
       this.state.expanded && (

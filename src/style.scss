@@ -541,7 +541,7 @@ align-items: center;
 padding: 16px;
 position: relative;
 
-width: 250px;
+width: 300px;
 color: $rosy;
 font-family: $abril;
 font-style: normal;
@@ -564,6 +564,7 @@ background: #023535;
 
 border: 4px solid #FFF5F5;
 box-sizing: border-box;
+margin-bottom: 50px;
 }
 
 .title-pink:before {
@@ -573,8 +574,8 @@ box-sizing: border-box;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 171.82px;
-    height: 56.56px;
+    width: 300.82px;
+    height: 88.67px;
     z-index: -1;
     background: $rosy;
     -webkit-transform: rotate(12.57deg);
@@ -678,3 +679,177 @@ width: 10vw;
     justify-content: space-around;
 }
 
+.logo-home{
+    color: $white;
+}
+
+.budget-center{
+width: 508px;
+height: 566px;
+
+/* noble fir */
+
+background: #023535;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+z-index: -100;
+}
+
+
+.title-blue{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 16px;
+position: relative;
+
+width: 255px;
+height: 66px;
+color: $rosy;
+font-family: $abril;
+font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 49px;
+/* identical to box height */
+
+text-align: center;
+letter-spacing: 0.03em;
+
+/* rosy cheeks */
+
+color: #FF77E1;
+/* noble fir */
+
+background: #023535;
+/* white as winter snow */
+
+border: 4px solid #FFF5F5;
+box-sizing: border-box;
+margin-bottom: 25px;
+}
+
+.title-blue:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 255px;
+    height: 66px;
+    z-index: -1;
+    background: $rosy;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+    -ms-transform: rotate(6deg);
+    transform: rotate(6deg);
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+}
+
+.choose-budget-top-stuff{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.budget-subtitle-1{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+.budget-subtitle-2{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+width: 325px;
+height: 92px;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+.budget-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.budget-input{
+    border: 5px solid #FFF5F5;
+    box-sizing: border-box;
+    width: 300px;
+    height: 109px;
+    font-family: $abril;
+font-style: normal;
+font-weight: normal;
+font-size: 72px;
+line-height: 97px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* seafoam grinch */
+
+color: $seafoamgrinch;
+background-color: transparent;
+}
+
+.budget-dollar-sign{
+    font-family: Abril Fatface;
+font-style: normal;
+font-weight: normal;
+font-size: 72px;
+line-height: 97px;
+margin-right: -50px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* seafoam grinch */
+
+color: $seafoamgrinch;
+
+}
+.button-pink{
+    width: 177px;
+height: 37px;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+outline: none;
+border: none;
+text-align: center;
+
+display: inline-flex;
+align-items: center;
+justify-content: center;
+background-color: $rosy;
+}
