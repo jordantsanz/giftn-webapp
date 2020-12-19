@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/no-string-refs */
 import React from 'react';
@@ -25,16 +26,32 @@ class BudgetUserTableRow extends React.Component {
     );
   }
 
-  toggleExpander = (e) => {
-    if (e.target.type === 'checkbox') return;
+  // checks the status of a checkbox to see if it has been updated to bought
+  checkStatus = (e, id) => {
+    for (let i = 0; i < this.props.person.giftInfo.length; i++) {
+      if (this.props.person.giftInfo[i] == id) {
+        if (e.target.checked) {
+          this.props.person.giftInfo[i].bought = true;
+        } else {
+          this.props.person.giftInfo[i].bought = false;
+        }
+        return; // need to send call to update in database
+      }
+    }
+  }
 
-    if (e.target.type === 'button') {
+  // expands a row when it is clicked on by calling the appropriate animation
+  toggleExpander = (e) => {
+    if (e.target.type === 'checkbox') return; // makes sure row is clicked
+
+    if (e.target.type === 'button') { // if button is clicked
+      // expands the row
       if (!this.state.expanded) {
         this.setState(
           { expanded: true },
           () => {
             if (this.refs.expanderBody) {
-              slideDown(this.refs.expanderBody);
+              slideDown(this.refs.expanderBody); // calls the animation
             }
           },
         );
@@ -42,7 +59,7 @@ class BudgetUserTableRow extends React.Component {
         return;
       }
     }
-
+    // checks when other row click, not button click
     if (!this.state.expanded) {
       this.setState(
         { expanded: true },
@@ -52,6 +69,7 @@ class BudgetUserTableRow extends React.Component {
           }
         },
       );
+      // unexpands the row
     } else {
       slideUp(this.refs.expanderBody, {
         onComplete: () => { this.setState({ expanded: false }); },
@@ -59,10 +77,14 @@ class BudgetUserTableRow extends React.Component {
     }
   }
 
+  // fired when add gift button clicked; adds a gift to the gift array
   addGift = () => {
-    this.props.person.giftInfo.push({ giftName: 'key', price: 200 });
+    this.props.person.giftInfo.push({
+      id: 2000, giftName: 'key', price: 200, bought: false,
+    });
   }
 
+  // displays gifts when the row is expanded
   renderGifts = () => {
     return this.props.person.giftInfo.map((giftInfo) => {
       console.log(giftInfo);
@@ -71,18 +93,25 @@ class BudgetUserTableRow extends React.Component {
           <td>{giftInfo.giftName}</td>
           <td>{giftInfo.price}</td>
           <td>pic</td>
-          <td><input className="uk-checkbox" type="checkbox" /></td>
+          <td><input className="uk-checkbox"
+            type="checkbox"
+            checked={giftInfo.bought}
+            onChange={(e) => {
+              this.clickMe(e, giftInfo.id);
+            }}
+          />
+          </td>
         </tr>
       );
     });
   }
 
+  // renders the component
   render() {
     return [
       <tr key="main" onClick={this.toggleExpander}>
         <td>{this.props.person.name}</td>
         <td className="uk-text-nowrap">{this.calculateTotal()}</td>
-        {/* <td><img className="uk-preserve-width uk-border-circle" src={user.picture.thumbnail} width={48} alt="avatar" /></td> */}
         <td>
           <button type="button" onClick={this.addGift}>Add gift</button>
         </td>

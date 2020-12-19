@@ -1,18 +1,24 @@
 /* eslint-disable no-param-reassign */
+/*
+* Animations for table collapsing
+* Utilizes D3 to collapse and open tables
+*/
+
 import { easeCubicOut } from 'd3-ease';
 import { interpolateString } from 'd3-interpolate';
 
+// starts the animation loop
 function startAnimationLoop({
   onProgress, onComplete, duration, initialProgress,
 }) {
   let start = null;
   let requestId = null;
 
-  const startTimeDiff = (initialProgress || 0) * duration;
+  const startTimeDiff = (initialProgress || 0) * duration; // calculates the start time difference
 
   const step = (timestamp) => {
-    if (!start) start = timestamp - startTimeDiff;
-    let progress = (timestamp - start) / duration;
+    if (!start) start = timestamp - startTimeDiff; // makes transition smooth
+    let progress = (timestamp - start) / duration; // calculates where the animation is currently
     if (progress > 1) {
       progress = 1;
     }
@@ -20,20 +26,20 @@ function startAnimationLoop({
 
     if (progress < 1) {
       requestId = window.requestAnimationFrame(step);
-    } else if (onComplete) {
+    } else if (onComplete) { // checks to see if complete
       onComplete();
     }
   };
   requestId = window.requestAnimationFrame(step);
 
-  return {
+  return { // stops animation loop
     stop() {
       cancelAnimationFrame(requestId);
     },
   };
 }
 
-function getStyles(element, props) {
+function getStyles(element, props) { // styles the animation
   const computed = window.getComputedStyle(element);
   return props.reduce((obj, prop) => {
     obj[prop] = computed[prop];
@@ -69,14 +75,17 @@ function slide(element, { duration, direction, onComplete }) {
   });
 }
 
+// slides the table row down
 function slideDown(element, { duration = 750, onComplete } = {}) {
   return slide(element, { direction: 'DOWN', duration, onComplete });
 }
 
+// slides the table row up
 function slideUp(element, { duration = 750, onComplete } = {}) {
   return slide(element, { direction: 'UP', duration, onComplete });
 }
 
+// used for table components
 export {
   startAnimationLoop, slide, slideDown, slideUp,
 };
