@@ -48,7 +48,7 @@ const people = [
   },
 ];
 
-class Home extends Component {
+class BudgetHub extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -231,4 +231,4 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, null)(BudgetHub);

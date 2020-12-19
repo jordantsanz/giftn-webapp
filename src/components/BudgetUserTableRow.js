@@ -4,7 +4,7 @@ import React from 'react';
 import { slideDown, slideUp } from './anim';
 import '../style.scss';
 
-class UserTableRow extends React.Component {
+class BudgetUserTableRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,4 +112,4 @@ class UserTableRow extends React.Component {
   }
 }
 
-export default UserTableRow;
+export default BudgetUserTableRow;

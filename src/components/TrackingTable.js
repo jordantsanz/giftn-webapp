@@ -2,48 +2,46 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { Component } from 'react';
-import UserTableRow from './UserTableRow';
+import TrackingUserTableRow from './TrackingUserTableRow';
 
-class Table extends Component {
+class TrackingTable extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      addingPerson: false,
-      person: '',
+      addingNumber: false,
+      number: '',
     };
   }
 
-  addPersonReveal = () => {
+  addNumberReveal = () => {
     this.setState((prevState) => {
       return {
-        addingPerson: !prevState.addingPerson,
+        addingNumber: !prevState.addingNumber,
       };
     });
   }
 
-  grabName = (e) => {
+  grabNumber = (e) => {
     this.setState({
-      person: e.target.value,
+      number: e.target.value,
     });
   }
 
-  submitPerson = () => {
-    this.props.people.push({
-      name: this.state.person,
-      giftInfo: [{
-        giftName: 'bitch',
-        price: 200,
-      }],
+  submitNumber = () => {
+    this.props.numbers.push({
+      number: this.state.number,
+      friend: '',
+      status: '',
     });
   }
 
-  addPersonSectionRender = () => {
-    if (this.state.addingPerson) {
+  addNumberSectionRender = () => {
+    if (this.state.addingNumber) {
       return (
         <div className="adding-person-revealed">
-          <input type="input" placeholder="person" onChange={this.grabName} />
-          <button type="button" onClick={this.submitPerson}> Add person! </button>
+          <input type="input" placeholder="person" onChange={this.grabNumber} />
+          <button type="button" onClick={this.submitNumber}> Add number! </button>
         </div>
       );
     } else {
@@ -54,8 +52,8 @@ class Table extends Component {
   }
 
   render() {
-    const isLoading = this.props.people === null;
-    console.log(this.props.people);
+    const isLoading = this.props.numbers === null;
+    console.log(this.props.numbers);
     return (
       <main>
         <div className="table-container">
@@ -63,8 +61,8 @@ class Table extends Component {
             <table className="table-main">
               <thead className="left-align">
                 <tr>
-                  <th className="uk-table-shrink">Name</th>
-                  <th>Total</th>
+                  <th className="uk-table-shrink">Tracking Number</th>
+                  <th>Friend</th>
                   <th />
                   <th className="uk-table-shrink" />
                 </tr>
@@ -72,18 +70,18 @@ class Table extends Component {
               <tbody className="left-align">
                 {isLoading
                   ? <tr><td colSpan={6} className="uk-text-center"><em className="uk-text-muted">Loading...</em></td></tr>
-                  : this.props.people.map((person) => <UserTableRow person={person} />)}
+                  : this.props.numbers.map((row) => <TrackingUserTableRow row={row} />)}
               </tbody>
             </table>
           </div>
         </div>
         <div className="add-people-section">
-          <button className="button" type="button" onClick={this.addPersonReveal}>Add person</button>
-          {this.addPersonSectionRender()}
+          <button className="button" type="button" onClick={this.addNumberReveal}>Add Number</button>
+          {this.addNumberSectionRender()}
         </div>
       </main>
     );
   }
 }
 
-export default Table;
+export default TrackingTable;
