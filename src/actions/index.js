@@ -118,6 +118,31 @@ export function addGiftToPerson(user, personId, gift) {
   };
 }
 
+export function deleteGiftFromPerson(user, personID, gift) {
+  console.log('user', user);
+  console.log('personID', personID);
+  console.log('gift', gift);
+
+  return (dispatch) => {
+    axios.put(`${BACKEND_API}/personGift/${personID}`, { gift });
+
+    // now update redux
+    const newuser = user;
+    console.log(personID);
+    for (let i = 0; i < newuser.people.length; i++) {
+      if (newuser.people[i].id == personID) {
+        for (const [key] of Object.entries()) {
+          if (key == gift.id) {
+            delete newuser.people[i].id[key];
+            console.log('delete');
+          }
+        }
+      }
+    }
+    dispatch({ type: ActionTypes.UPDATE_USER, payload: newuser });
+  };
+}
+
 export function addPerson(user, person) {
   console.log('user', user.id);
   console.log('person', person);
@@ -137,12 +162,19 @@ export function addPerson(user, person) {
   };
 }
 
-export function deletePerson(user, personId) {
+export function deletePerson(user, personID) {
+  console.log(user);
+  console.log(personID);
   return (dispatch) => {
-    axios.delete(`${BACKEND_API}/person/${user.id}`, { personId });
+    axios.put(`${BACKEND_API}/person/${user.id}`, {
+      headers: {
+        'Content-Type': 'JSON',
+      },
+      personID,
+    });
     const newuser = user;
     for (let i = 0; i < user.people.length; i++) {
-      if (user.people[i].id == personId) {
+      if (user.people[i].id == personID) {
         delete newuser.people[i];
       }
     }

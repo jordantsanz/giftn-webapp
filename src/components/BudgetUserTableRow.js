@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { slideDown, slideUp } from './anim';
-import { deletePerson, buyGift, wishlistGift } from '../actions';
+import {
+  deletePerson, buyGift, wishlistGift, deleteGiftFromPerson,
+} from '../actions';
 
 class BudgetUserTableRow extends React.Component {
   constructor(props) {
@@ -137,7 +139,13 @@ class BudgetUserTableRow extends React.Component {
             </div>
             <div className="gift-price">${giftInfo.price}</div>
             <div className="button-cell">
-              <FontAwesomeIcon icon={faTrash} className="trash-red" />
+              <FontAwesomeIcon icon={faTrash}
+                className="trash-red"
+                id="deletebutton-gift"
+                onClick={(e) => {
+                  this.deleteGift(e, this.props.person.id, giftInfo);
+                }}
+              />
               <div className="checkbox-div"><input className="checkbox"
                 type="checkbox"
                 onChange={(e) => {
@@ -155,6 +163,12 @@ class BudgetUserTableRow extends React.Component {
     console.log('outsdie delete');
     console.log('personId', personId);
     this.props.deletePerson(this.props.user, personId);
+  }
+
+  deleteGift = (e, personId, gift) => {
+    console.log('deleting gift');
+    console.log('gift in budget: ', gift);
+    this.props.deleteGiftFromPerson(this.props.user, personId, gift);
   }
 
   // renders the component
@@ -193,4 +207,6 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default connect(mapStateToProps, { deletePerson, buyGift, wishlistGift })(BudgetUserTableRow);
+export default connect(mapStateToProps, {
+  deletePerson, buyGift, wishlistGift, deleteGiftFromPerson,
+})(BudgetUserTableRow);
