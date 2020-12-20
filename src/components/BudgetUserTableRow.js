@@ -59,15 +59,19 @@ class BudgetUserTableRow extends React.Component {
         bought: giftInfo.bought,
       });
     }
+
+    console.log('checked? ', e.target.checked);
     const giftInfo = giftArray;
     for (let i = 0; i < giftInfo.length; i++) {
-      if (giftInfo[i] == id) {
+      if (giftInfo[i].id == id) {
+        // if now checked:
         if (e.target.checked) {
-          this.props.buyGift(this.props.user, giftInfo[i]);
-        } else {
-          this.props.wishlistGift(this.props.user, giftInfo[i]);
+          console.log('buy gift called');
+          this.props.buyGift(this.props.user, this.props.person.id, giftInfo[i]);
+        } else { // if now unchecked
+          console.log('wishlist gift called');
+          this.props.wishlistGift(this.props.user, this.props.person.id, giftInfo[i]);
         }
-        return; // need to send call to update in database
       }
     }
   }
@@ -148,8 +152,9 @@ class BudgetUserTableRow extends React.Component {
               />
               <div className="checkbox-div"><input className="checkbox"
                 type="checkbox"
+                checked={giftInfo.bought}
                 onChange={(e) => {
-                  this.clickMe(e, giftInfo.id);
+                  this.checkStatus(e, giftInfo.id);
                 }}
               />
               </div>

@@ -185,15 +185,20 @@ export function deletePerson(user, personID) {
   };
 }
 
-export function buyGift(user, gift) {
+export function buyGift(user, personID, gift) {
+  console.log('buy gift user: ', user);
+  console.log('buy gift gift', gift);
   return (dispatch) => {
-    axios.put(`${BACKEND_API}/gift/${gift.id}`);
+    axios.put(`${BACKEND_API}/gift/${gift.id}`, { personID });
     const newuser = user;
+
     for (let i = 0; i < newuser.people.length; i++) {
-      for (const [key] of newuser.people[i].giftInfo) {
-        const id = key;
-        if (id == gift.id) {
-          newuser.people[i].giftInfo[id].bought = true;
+      if (newuser.people[i].id == personID) {
+        for (const [key] of Object.entries(newuser.people[i].giftInfo)) {
+          const id = key;
+          if (id == gift.id) {
+            newuser.people[i].giftInfo[id].bought = true;
+          }
         }
       }
     }
@@ -201,15 +206,17 @@ export function buyGift(user, gift) {
   };
 }
 
-export function wishlistGift(user, gift) {
+export function wishlistGift(user, personID, gift) {
   return (dispatch) => {
-    axios.delete(`${BACKEND_API}/gift/${gift.id}`);
+    axios.put(`${BACKEND_API}/wishlist/${gift.id}`, { personID });
     const newuser = user;
     for (let i = 0; i < newuser.people.length; i++) {
-      for (const [key] of newuser.people[i].giftInfo) {
-        const id = key;
-        if (id == gift.id) {
-          newuser.people[i].giftInfo[id].bought = false;
+      if (newuser.people[i].id == personID) {
+        for (const [key] of Object.entries(newuser.people[i].giftInfo)) {
+          const id = key;
+          if (id == gift.id) {
+            newuser.people[i].giftInfo[id].bought = false;
+          }
         }
       }
     }
