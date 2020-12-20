@@ -25,9 +25,11 @@ class BudgetHub extends Component {
     };
   }
 
-  componentDidMount() {
-    this.makeGauge(this.props.user.people, this.props.user.budget);
-    this.makeGauge2(this.props.user.people, this.props.user.budget);
+  componentDidUpdate() {
+    if (this.props.user.name != '' && !this.state.gauge && !this.state.gauge2) {
+      this.makeGauge(this.props.user.people, this.props.user.budget);
+      this.makeGauge2(this.props.user.people, this.props.user.budget);
+    }
   }
 
   componentWillUnmount() {
@@ -43,13 +45,13 @@ class BudgetHub extends Component {
       if (!this.state.gauge) {
         // Create chart
         let total = 0;
-        console.log(total);
         for (let i = 0; i < peopleList.length; i++) {
           console.log('i', i);
           const { giftInfo } = peopleList[i];
-          for (let j = 0; j < giftInfo.length; j++) {
-            if (giftInfo[j].bought) {
-              total += giftInfo[j].price;
+          for (const [key] of Object.entries(giftInfo)) {
+            console.log(giftInfo);
+            if (giftInfo[key].bought) {
+              total += giftInfo[key].price;
             }
           }
         }
@@ -59,89 +61,67 @@ class BudgetHub extends Component {
         const percent = Math.round((total / totalBudget) * 100);
         const chart = am4core.create('chartdiv2', am4charts.GaugeChart);
         chart.innerRadius = am4core.percent(82);
+        chart.data = [{
+          value: 20,
+          category: '',
+          full: 100,
+        },
+        ];
+
+        console.log('total percent', percent);
 
         /**
-         * Normal axis
-         */
+       * Normal axis
+       */
+        chart.innerRadius = am4core.percent(80);
 
-        const axis = chart.xAxes.push(new am4charts.ValueAxis());
-        axis.min = 0;
-        axis.max = 100;
-        axis.strictMinMax = true;
-        axis.renderer.radius = am4core.percent(80);
-        axis.renderer.inside = true;
-        axis.renderer.line.strokeOpacity = 1;
-        axis.renderer.ticks.template.disabled = false;
-        axis.renderer.ticks.template.strokeOpacity = 1;
-        axis.renderer.ticks.template.length = 10;
-        axis.renderer.grid.template.disabled = true;
-        axis.renderer.labels.template.radius = 30;
-        axis.renderer.labels.template.fontSize = 10;
-        axis.renderer.labels.template.adapter.add('text', (text) => {
-          return `${text}%`;
+        // Set number format
+        chart.numberFormatter.numberFormat = '#.#\'%\'';
+
+        // Create axes
+        const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = 'category';
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.grid.template.strokeOpacity = 0;
+        categoryAxis.renderer.labels.template.horizontalCenter = 'right';
+        categoryAxis.renderer.labels.template.fontWeight = 500;
+        categoryAxis.renderer.labels.template.adapter.add('fill', (fill, target) => {
+          return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
         });
+        categoryAxis.renderer.minGridDistance = 10;
 
-        /**
-         * Axis for ranges
-         */
+        const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.grid.template.strokeOpacity = 0;
+        valueAxis.min = 0;
+        valueAxis.max = 100;
+        valueAxis.strictMinMax = true;
 
-        // eslint-disable-next-line no-unused-vars
-        const colorSet = new am4core.ColorSet();
+        // Create series
+        const series1 = chart.series.push(new am4charts.RadarColumnSeries());
+        series1.dataFields.valueX = 'full';
+        series1.dataFields.categoryY = 'category';
+        series1.clustered = false;
+        series1.columns.template.fill = new am4core.InterfaceColorSet().getFor('alternativeBackground');
+        series1.columns.template.fillOpacity = 0.08;
+        series1.columns.template.cornerRadiusTopLeft = 20;
+        series1.columns.template.strokeWidth = 0;
+        series1.columns.template.radarColumn.cornerRadius = 20;
 
-        const axis2 = chart.xAxes.push(new am4charts.ValueAxis());
-        axis2.min = 0;
-        axis2.max = 100;
-        axis2.strictMinMax = true;
-        axis2.renderer.labels.template.disabled = true;
-        axis2.renderer.ticks.template.disabled = true;
-        axis2.renderer.grid.template.disabled = true;
+        const series2 = chart.series.push(new am4charts.RadarColumnSeries());
+        series2.dataFields.valueX = 'value';
+        series2.dataFields.categoryY = 'category';
+        series2.clustered = false;
+        series2.columns.template.strokeWidth = 0;
+        series2.columns.template.radarColumn.cornerRadius = 20;
 
-        const range0 = axis2.axisRanges.create();
-        range0.value = 0;
-        range0.endValue = 50;
-        range0.axisFill.fillOpacity = 1;
-        range0.axisFill.fill = am4core.color('#00FF19');
-
-        const range1 = axis2.axisRanges.create();
-        range1.value = 50;
-        range1.endValue = 100;
-        range1.axisFill.fillOpacity = 1;
-        range1.axisFill.fill = am4core.color('#7000FF');
-
-        /**
-         * Label
-         */
-        const hand = chart.hands.push(new am4charts.ClockHand());
-        hand.axis = axis2;
-        hand.innerRadius = am4core.percent(25);
-        hand.startWidth = 10;
-        hand.pin.disabled = true;
-        hand.value = percent;
-
-        const label = chart.radarContainer.createChild(am4core.Label);
-        label.isMeasured = false;
-        label.fontSize = 15;
-        label.x = am4core.percent(50);
-        label.y = am4core.percent(100);
-        label.horizontalCenter = 'middle';
-        label.verticalCenter = 'bottom';
-        label.text = `${hand.value}%`;
-
-        /**
-         * Hand
-         */
-
-        hand.events.on('propertychanged', (ev) => {
-          range0.endValue = ev.target.value;
-          range1.value = ev.target.value;
-          label.text = `${axis2.positionToValue(hand.currentPosition).toFixed(1)}%`;
-          axis2.invalidate();
+        series2.columns.template.adapter.add('fill', (fill, target) => {
+          return chart.colors.getIndex(target.dataItem.index);
         });
 
         const title = chart.titles.create();
         title.text = 'Budget Spent';
         title.marginBottom = 30;
-        title.fontSize = 15;
+        title.fontSize = 10;
         title.marginTop = 30;
         title.fontFamily = 'Roboto';
         title.fill = '#000000';
@@ -164,97 +144,72 @@ class BudgetHub extends Component {
         // Create chart
           let total = 0;
           for (let i = 0; i < peopleList.length; i++) {
-            console.log('i', i);
             const { giftInfo } = peopleList[i];
-            for (let j = 0; j < giftInfo.length; j++) {
-              total += giftInfo[j].price;
+            for (const [key] of Object.entries(giftInfo)) {
+              total += giftInfo[key].price;
             }
           }
 
-          console.log(total);
+          console.log('total gauge: ', total);
 
           const percent = Math.round((total / totalBudget) * 100);
           const chart = am4core.create('chartdiv', am4charts.GaugeChart);
           chart.innerRadius = am4core.percent(82);
+          chart.data = [{
+            value: 20,
+            category: '',
+            full: 100,
+          },
+          ];
 
-          console.log(percent);
+          console.log('total percent', percent);
 
           /**
          * Normal axis
          */
+          chart.innerRadius = am4core.percent(80);
 
-          const axis = chart.xAxes.push(new am4charts.ValueAxis());
-          axis.min = 0;
-          axis.max = 100;
-          axis.strictMinMax = true;
-          axis.renderer.radius = am4core.percent(80);
-          axis.renderer.inside = true;
-          axis.renderer.line.strokeOpacity = 1;
-          axis.renderer.ticks.template.disabled = false;
-          axis.renderer.ticks.template.strokeOpacity = 1;
-          axis.renderer.ticks.template.length = 10;
-          axis.renderer.grid.template.disabled = true;
-          axis.renderer.labels.template.radius = 30;
-          axis.renderer.labels.template.fontSize = 10;
-          axis.renderer.labels.template.adapter.add('text', (text) => {
-            return `${text}%`;
+          // Set number format
+          chart.numberFormatter.numberFormat = '#.#\'%\'';
+
+          // Create axes
+          const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+          categoryAxis.dataFields.category = 'category';
+          categoryAxis.renderer.grid.template.location = 0;
+          categoryAxis.renderer.grid.template.strokeOpacity = 1;
+          categoryAxis.renderer.labels.template.horizontalCenter = 'right';
+          categoryAxis.renderer.labels.template.fontWeight = 0;
+          categoryAxis.renderer.labels.template.adapter.add('fill', (fill, target) => {
+            return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
           });
+          categoryAxis.renderer.minGridDistance = 10;
 
-          /**
-         * Axis for ranges
-         */
+          const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+          valueAxis.renderer.grid.template.strokeOpacity = 0;
+          valueAxis.min = 0;
+          valueAxis.max = 100;
+          valueAxis.strictMinMax = true;
 
-          // eslint-disable-next-line no-unused-vars
-          const colorSet = new am4core.ColorSet();
+          // Create series
+          const series1 = chart.series.push(new am4charts.RadarColumnSeries());
+          series1.dataFields.valueX = 'full';
+          series1.dataFields.categoryY = 'category';
+          series1.clustered = false;
+          series1.columns.template.fill = new am4core.InterfaceColorSet().getFor('alternativeBackground');
+          series1.columns.template.fillOpacity = 0.08;
+          series1.columns.template.cornerRadiusTopLeft = 20;
+          series1.columns.template.strokeWidth = 0;
+          series1.columns.template.radarColumn.cornerRadius = 20;
 
-          const axis2 = chart.xAxes.push(new am4charts.ValueAxis());
-          axis2.min = 0;
-          axis2.max = 100;
-          axis2.strictMinMax = true;
-          axis2.renderer.labels.template.disabled = true;
-          axis2.renderer.ticks.template.disabled = true;
-          axis2.renderer.grid.template.disabled = true;
+          const series2 = chart.series.push(new am4charts.RadarColumnSeries());
+          series2.dataFields.valueX = 'value';
+          series2.dataFields.categoryY = 'category';
+          series2.clustered = false;
+          series2.columns.template.strokeWidth = 0;
+          series2.columns.template.radarColumn.cornerRadius = 20;
 
-          const range0 = axis2.axisRanges.create();
-          range0.value = 0;
-          range0.endValue = 50;
-          range0.axisFill.fillOpacity = 1;
-          range0.axisFill.fill = am4core.color('#00FF19');
-
-          const range1 = axis2.axisRanges.create();
-          range1.value = 50;
-          range1.endValue = 100;
-          range1.axisFill.fillOpacity = 1;
-          range1.axisFill.fill = am4core.color('#7000FF');
-
-          /**
-         * Label
-         */
-          const hand = chart.hands.push(new am4charts.ClockHand());
-          hand.axis = axis2;
-          hand.innerRadius = am4core.percent(25);
-          hand.startWidth = 10;
-          hand.pin.disabled = true;
-          hand.value = percent;
-
-          const label = chart.radarContainer.createChild(am4core.Label);
-          label.isMeasured = false;
-          label.fontSize = 15;
-          label.x = am4core.percent(50);
-          label.y = am4core.percent(100);
-          label.horizontalCenter = 'middle';
-          label.verticalCenter = 'bottom';
-          label.text = `${hand.value}%`;
-
-          /**
-         * Hand
-         */
-
-          hand.events.on('propertychanged', (ev) => {
-            range0.endValue = ev.target.value;
-            range1.value = ev.target.value;
-            label.text = `${axis2.positionToValue(hand.currentPosition).toFixed(1)}%`;
-            axis2.invalidate();
+          series2.columns.template.adapter.add('fill', (fill, target) => {
+            return chart.colors.getIndex(target.dataItem.index);
           });
 
           const title = chart.titles.create();

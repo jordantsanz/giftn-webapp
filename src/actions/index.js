@@ -15,7 +15,8 @@ export const ActionTypes = {
 
 const UPS_URL = 'https://wwwcie.ups.com/track/v1/details';
 // const FEDEX_URL = 'https://wsbeta.fedex.com:443/web-services';
-const BACKEND_API = 'http://localhost:9090/api';
+const BACKEND_API = 'https://giftn-api.herokuapp.com/api';
+// const BACKEND_API = 'http://localhost:9090/api';
 
 // // logs user into google authentication
 // export function logInUser(userProfileObj) {
