@@ -10,7 +10,7 @@ import Modal from 'react-modal';
 import $ from 'jquery';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import TrackingUserTableRow from './TrackingUserTableRow';
-import { addTrackingNumber } from '../actions';
+import { addTrackingNumber, sendEmail } from '../actions';
 
 class TrackingTable extends Component {
   constructor(props) {
@@ -22,7 +22,13 @@ class TrackingTable extends Component {
       note: '',
       addNumberModalIsOpen: false,
       emailModal: false,
+      email: '',
     };
+  }
+
+  onInputChangeEmail = (event) => {
+    console.log(event.target.value);
+    this.setState({ email: event.target.value });
   }
 
   switchStateAddNumber = () => {
@@ -100,6 +106,25 @@ class TrackingTable extends Component {
     });
   }
 
+  sendEmail = () => {
+    let found = '';
+    const toName = $('#dropdown-email').val();
+    for (const [key, value] of Object.entries(this.props.user.trackingNumbers)) {
+      const trackingNum = key;
+      const trackingObj = value;
+      if (trackingObj.person === toName) {
+        found = trackingNum;
+      }
+    }
+    const emailObject = {
+      toAddress: this.state.email,
+      toName,
+      fromName: this.props.user.name,
+      trackingNumber: found,
+    };
+    this.props.sendEmail(emailObject);
+  }
+
   render() {
     return (
       <div>
@@ -160,11 +185,15 @@ class TrackingTable extends Component {
             </div>
             <div className="title-black-modal">Send Email</div>
             <div className="subtitle-modal-addnumber">Pick a person on your Gift List to send this email.</div>
-            <select type="select" id="dropdown-email">
+            <select type="select" id="dropdown-email" onChange={this.onInputChangeToName}>
               {this.props.user.people.map((person) => {
                 return <option key={person.name} value={person.name}>{person.name}</option>;
               })}
             </select>
+            <div>
+              <div>Email:</div>
+              <input type="text" id="email" name="email" onChange={this.onInputChangeEmail} />
+            </div>
             <button type="button" className="email-modal-submit" onClick={this.sendEmail}>Send email</button>
           </Modal>
         </div>
@@ -179,4 +208,4 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default connect(mapStateToProps, { addTrackingNumber })(TrackingTable);
+export default connect(mapStateToProps, { addTrackingNumber, sendEmail })(TrackingTable);

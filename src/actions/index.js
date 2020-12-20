@@ -254,3 +254,10 @@ export function deleteTrackingNumber(user, trackingNumber) {
     dispatch({ type: ActionTypes.UPDATE_USER, payload: newuser });
   };
 }
+
+export function sendEmail(emailObject) {
+  return () => {
+    axios.put(`${BACKEND_API}/mail/`, emailObject)
+      .then((res) => console.log(res));
+  };
+}

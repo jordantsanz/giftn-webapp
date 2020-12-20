@@ -18,9 +18,9 @@ class MailTest extends Component {
           <div className="pink-box">
             <div className="to-box"> To: to-name </div>
             <div className="from-box"> From: from-name </div>
-            <div className="message-box" />
+            <div className="message-box">Hi this is a special message</div>
           </div>
-          <div className="tracking-number-box" />
+          <div className="tracking-number-box">This is a tracking number</div>
         </div>
         <div className="bottom-border">
           <div className="blue-div" />
