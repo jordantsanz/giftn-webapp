@@ -223,3 +223,35 @@ export function wishlistGift(user, personID, gift) {
     dispatch({ type: ActionTypes.UPDATE_USER, payload: newuser });
   };
 }
+
+export function addTrackingNumber(user, trackingNumberObject) {
+  console.log('user', user);
+  console.log('obj', trackingNumberObject);
+
+  return (dispatch) => {
+    axios.post(`${BACKEND_API}/tracking/${user.id}`, { trackingNumberObject });
+    const newuser = user;
+    console.log(newuser.trackingNumbers);
+    newuser.trackingNumbers[trackingNumberObject.trackingNumber] = trackingNumberObject;
+    dispatch({ type: ActionTypes.UPDATE_USER, payload: newuser });
+  };
+}
+
+export function deleteTrackingNumber(user, trackingNumber) {
+  console.log('user', user);
+  console.log('obj', trackingNumber);
+
+  return (dispatch) => {
+    axios.put(`${BACKEND_API}/tracking/${user.id}`, { trackingNumber });
+    const newuser = user;
+    // delete and send to redux
+    for (const [key] of Object.entries(newuser.trackingNumbers)) {
+      const num = key;
+      if (num == trackingNumber) {
+        delete newuser.trackingNumbers[key];
+      }
+    }
+
+    dispatch({ type: ActionTypes.UPDATE_USER, payload: newuser });
+  };
+}

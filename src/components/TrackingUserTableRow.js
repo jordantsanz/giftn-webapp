@@ -3,11 +3,12 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable react/no-string-refs */
 import React from 'react';
-
 import '../style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { connect } from 'react-redux';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { slideDown, slideUp } from './anim';
+import { deleteTrackingNumber } from '../actions';
 
 class TrackingUserTableRow extends React.Component {
   constructor(props) {
@@ -51,57 +52,45 @@ class TrackingUserTableRow extends React.Component {
     }
   }
 
-  addGift = () => {
-    this.props.row.giftInfo.push({ id: 2000, giftName: 'key', price: 200 });
+  // displays gifts when the row is expanded
+  renderGifts = () => {
+    console.log(this.props.row);
+    return (
+      <div className="gift-row-flex">
+        <div className="gift-outer">
+          <div className="gift-pic">pic</div>
+          <div className="gift-name">{this.props.row.note}</div>
+        </div>
+      </div>
+    );
   }
 
-  deleteGift = (event, id) => {
-    if (event.target.type == 'button') {
-      for (let i = 0; i < this.props.row.giftInfo.length; i++) {
-        if (id == this.props.row.giftInfo[i].id) {
-          delete this.props.row.giftInfo[i];
-        }
-      }
+  seeClassName = () => {
+    if (this.props.row.trackingNumber == 'blankblankblank') {
+      return 'blank-row';
+    } else {
+      return 'name-row';
     }
   }
 
-  //   clickMe = (e, id) => {
-
-  //   }
-
-  // displays gifts when the row is expanded
-  renderGifts = () => {
-    return this.props.row.giftInfo.map((giftInfo) => {
-      return (
-        <div className="gift-row-flex">
-          <div className="gift-outer">
-            <div className="gift-pic">pic</div>
-            <div className="gift-name">{giftInfo.giftName} {giftInfo.giftAvailability}</div>
-          </div>
-          <div className="gift-price">${giftInfo.price}</div>
-          <div className="button-cell">
-            <FontAwesomeIcon icon={faTrash} className="trash-red" />
-            <div className="checkbox-div"><input className="uk-checkbox"
-              type="checkbox"
-              onChange={(e) => {
-                this.clickMe(e, giftInfo.id);
-              }}
-            />
-            </div>
-          </div>
-        </div>
-      );
-    });
+  deleteNumber = (e, row) => {
+    console.log('deleting number', row);
+    this.props.deleteTrackingNumber(this.props.user, row.trackingNumber);
   }
 
   render() {
     return [
       <div className="name-row" key="main" onClick={this.toggleExpander}>
-        <div className="name-cell">{this.props.row.number}</div>
-        <div className="friend-cell">{this.props.row.friend}</div>
+        <div className="name-cell">{this.props.row.trackingNumber}</div>
+        <div className="friend-cell">{this.props.row.person}</div>
         {/* <td><img className="uk-preserve-width uk-border-circle" src={user.picture.thumbnail} width={48} alt="avatar" /></td> */}
         <div className="buttons-cell">
-          <FontAwesomeIcon icon={faTrash} className="trash" />
+          <FontAwesomeIcon icon={faTrash}
+            className="trash"
+            onClick={(e) => {
+              this.deleteNumber(e, this.props.row);
+            }}
+          />
           <input className="checkbox"
             type="checkbox"
             onChange={(e) => {
@@ -123,4 +112,12 @@ class TrackingUserTableRow extends React.Component {
   }
 }
 
-export default TrackingUserTableRow;
+function mapStateToProps(reduxState) {
+  return {
+    user: reduxState.user,
+  };
+}
+
+export default connect(mapStateToProps, {
+  deleteTrackingNumber,
+})(TrackingUserTableRow);

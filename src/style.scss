@@ -417,6 +417,18 @@ color: #FFF5F5;
     background: $navynight;
 }
 
+.blank-row{
+    width: 960px;
+    height: 56px;
+    left: 262px;
+    top: 735px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 table { 
     border-collapse: collapse;
     width: 960px;
@@ -856,4 +868,256 @@ display: inline-flex;
 align-items: center;
 justify-content: center;
 background-color: $rosy;
+}
+
+
+/**************** mail test ********/
+
+.email-outer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.top-section{
+    display: flex;
+    background: #002863;
+    width: 837px;
+    height: 119px;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-div{
+    width: 837px;
+    height: 643px;
+    background: #023535;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.email-title{
+font-style: normal;
+font-weight: normal;
+font-size: 48px;
+line-height: 65px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+/* rosy cheeks */
+
+color: #FF77E1;
+}
+
+.pink-box{
+width: 398px;
+height: 262px;
+left: 101px;
+top: 307px;
+
+/* rosy cheeks */
+
+background: #FF77E1;
+}
+
+.to-box{
+width: 107px;
+height: 28px;
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+
+/* rudolph */
+
+background: #F35849;
+}
+
+
+/************************* Modals *****************/
+
+.add-number-modal{
+width: 447px;
+height: 431px;
+margin-left: 32.6vw;
+position: absolute;
+margin-top: 5vh;
+z-index: 1;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+
+/* five golden rings */
+
+background: #F5DA77;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open.modal:focus{
+    outline: none;
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease;
+    z-index: 2;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+    z-index: 2;
+  }
+  
+  .ReactModal__Overlay--before-close{
+    opacity: 0;
+    z-index: 2;
+  }
+
+.title-blue-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    position: relative;
+    
+    width: 245px;
+    
+    font-family: $abril;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    
+    /* rosy cheeks */
+    
+    color: #FF77E1;
+    
+    
+    /* white as winter snow */
+    
+    border: 4px solid #FFF5F5;
+    box-sizing: border-box;
+    background: #002863;
+    margin-bottom: 25px;
+}
+
+.title-blue-modal::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 194px;
+    height: 24px;
+    z-index: -1;
+    background: $rosy;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+    -ms-transform: rotate(6deg);
+    transform: rotate(6deg);
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+    background: #002863;
+}
+
+.subtitle-modal-addnumber{
+    width: 325px;
+height: 35px;
+
+
+font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* coal in your stocking */
+
+color: #0E0B0B;
+}
+
+.add-number-modal-submit{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+outline: none;
+border: none;
+
+width: 141px;
+height: 34px;
+
+/* navy night */
+
+background: #002863;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* rosy cheeks */
+
+color: #FF77E1;
+}
+
+.tracking-number-input, .note-input{
+    width: 300px;
+height: 39px;
+left: 74px;
+top: 239.3px;
+
+/* coal in your stocking */
+
+border: 2px solid #0E0B0B;
+box-sizing: border-box;
+background-color: transparent;
+}
+
+.tracking-number-input::placeholder, .note-input::placeholder{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* navy night */
+
+color: #002863;
 }
