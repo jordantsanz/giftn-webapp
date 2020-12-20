@@ -23,20 +23,8 @@ class Home extends Component {
       this.props.callUPS('1Z5338FF0107231059');
     }
 
-    changePage = () => {
-      console.log('hello');
-      console.log(this.state.clicked);
-      if (this.props.name != undefined && this.state.clicked) {
-        console.log('we in');
-      }
-    }
-
-    componentDidUpdate = () => {
-      this.changePage();
-    }
-
-    clickedButton = () => {
-      console.log('what');
+    updateClick = () => {
+      console.log('click');
       this.setState({
         clicked: true,
       });
@@ -54,8 +42,8 @@ class Home extends Component {
               <div className="home-title">This pandemic&apos;s stressful enough without holiday shopping...</div>
               <div className="home-subtitle-1">Easily track your gift lists, budgeting, and package deliveries.</div>
               <div className="home-subtitle-2">A COVID-Holiday is a breeze with giftn.</div>
-              <NavLink to="/choosebudget">
-                <Login class="login-button-home" text="Login with Google" fromHome history={this.props.history} />
+              <NavLink to="/choosebudget" onClick={this.updateClick}>
+                <Login class="login-button-home" text="Login with Google" fromHome history={this.props.history} clicked={this.state.clicked} />
               </NavLink>
             </div>
             <img alt="holiday tree" src={animation} className="home-center-right" />

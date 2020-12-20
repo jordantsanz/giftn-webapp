@@ -65,17 +65,14 @@ class BudgetUserTableRow extends React.Component {
       });
     }
 
-    console.log('checked? ', e.target.checked);
     const giftInfo = giftArray;
     for (let i = 0; i < giftInfo.length; i++) {
       if (giftInfo[i].id == id) {
         // if now checked:
         if (e.target.checked) {
-          console.log('buy gift called');
           this.props.buyGift(this.props.user, this.props.person.id, giftInfo[i]);
           this.props.reload();
         } else { // if now unchecked
-          console.log('wishlist gift called');
           this.props.wishlistGift(this.props.user, this.props.person.id, giftInfo[i]);
           this.props.reload();
         }

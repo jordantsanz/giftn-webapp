@@ -53,7 +53,7 @@ export function logOutUser() {
 }
 
 // Make new user, if there already isn't one
-export function addUser(username, name) {
+export function addUser(username, name, history, clicked) {
   return (dispatch) => {
     axios.get(`${BACKEND_API}/check/${username}`).then((response) => {
       console.log('check', response);
@@ -63,6 +63,9 @@ export function addUser(username, name) {
         axios.post(`${BACKEND_API}/user/${username}`, { username, name }).then((res) => {
           res.data.id = username;
           dispatch({ type: ActionTypes.LOG_IN, payload: res.data });
+          if (clicked) {
+            history.push('/');
+          }
 
           // error catch
         }).catch((error) => {
@@ -75,6 +78,9 @@ export function addUser(username, name) {
           console.log(res.data);
           res.data.id = username;
           dispatch({ type: ActionTypes.LOG_IN, payload: res.data });
+          if (clicked) {
+            history.push('/budget');
+          }
         })
 
         // error catch

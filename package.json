@@ -6,11 +6,11 @@
   "author": "jordantsanz <jordan.t.sanz.22@dartmouth.edu>",
   "license": "MIT",
   "scripts": {
-    "winbuild": "yarn clean & SET NODE_ENV=production & webpack --colors",
+    "winbuild": "yarn clean & SET NODE_ENV=production & webpack --color",
     "clean": "rimraf dist",
     "windeploy": "yarn winbuild & surge -p dist -d .surge.sh & yarn clean",
     "license": "MIT",
-    "build": "yarn clean; NODE_ENV=production webpack --colors",
+    "build": "yarn clean; NODE_ENV=production webpack --color",
     "start": "NODE_ENV=development webpack-dev-server",
     "deploy": "yarn build; surge -p dist -d http://giftn.surge.sh; yarn clean"
   },

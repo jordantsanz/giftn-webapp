@@ -28,21 +28,16 @@ class ChooseBudget extends Component {
 
     submitBudget = () => {
       const { budget } = this.state;
-      console.log('submitting');
       if (budget != undefined && budget != null) {
         for (let i = 0; i < budget.length; i++) {
           if (isLetter(budget[i])) {
-            console.log('is letter');
-            // alert('Please enter in a valid budget.');
             return;
           }
         }
-        console.log(this.props.user);
         this.props.updateBudget(this.props.user, this.state.budget);
         this.props.history.push('/budget');
       } else {
         this.props.history.push('/');
-        // alert('Please enter in a valid budget');
       }
     }
 
