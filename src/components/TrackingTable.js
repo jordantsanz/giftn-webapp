@@ -21,6 +21,7 @@ class TrackingTable extends Component {
       trackingNumber: '',
       note: '',
       addNumberModalIsOpen: false,
+      emailModal: false,
     };
   }
 
@@ -87,13 +88,25 @@ class TrackingTable extends Component {
     return numberArray;
   }
 
+  openEmailModal = () => {
+    this.setState({
+      emailModal: true,
+    });
+  }
+
+  closeEmailModal = () => {
+    this.setState({
+      emailModal: false,
+    });
+  }
+
   render() {
     return (
       <div>
         <div className="table-container">
           <div className="button-long-div">
             <div className="button-holder-table">
-              <button className="button" id="send-email-button" type="button">Send Email</button>
+              <button className="button" id="send-email-button" onClick={this.openEmailModal} type="button">Send Email</button>
               <button onClick={this.openAddNumberModal} className="button" id="add-tracking-button" type="button">Add Tracking Number</button>
             </div>
           </div>
@@ -101,12 +114,14 @@ class TrackingTable extends Component {
             {this.makeArray().map((row) => <TrackingUserTableRow row={row} />)}
           </div>
         </div>
+
+        {/* TRACKING NUMBER MODAL */}
         <div>
           <Modal
             isOpen={this.state.addNumberModalIsOpen}
             // onAfterOpen={afterOpenModal}
             onRequestClose={this.closeAddNumberModal}
-            className="add-number-modal"
+            className="modal add-number-modal"
             overlay="overlay"
             contentLabel="Add a Tracking Number"
           >
@@ -129,6 +144,28 @@ class TrackingTable extends Component {
               })}
             </select>
             <button type="button" className="add-number-modal-submit" onClick={this.submitNumber}>Add to my list</button>
+          </Modal>
+
+          {/* EMAIL MODAL */}
+          <Modal
+            isOpen={this.state.emailModal}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={this.closeAddNumberModal}
+            className="email-modal"
+            overlay="overlay"
+            contentLabel="Email a Friend"
+          >
+            <div className="modal-top">
+              <FontAwesomeIcon className="modal-x" id="yellow-x" role="button" onClick={this.closeEmailModal} icon={faTimes} />
+            </div>
+            <div className="title-black-modal">Send Email</div>
+            <div className="subtitle-modal-addnumber">Pick a person on your Gift List to send this email.</div>
+            <select type="select" id="dropdown-email">
+              {this.props.user.people.map((person) => {
+                return <option key={person.name} value={person.name}>{person.name}</option>;
+              })}
+            </select>
+            <button type="button" className="email-modal-submit" onClick={this.sendEmail}>Send email</button>
           </Modal>
         </div>
       </div>
