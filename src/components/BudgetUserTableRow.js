@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
@@ -41,7 +42,7 @@ class BudgetUserTableRow extends React.Component {
     let total = 0;
 
     for (let i = 0; i < giftInfo.length; i++) {
-      total += giftInfo[i].price;
+      total += parseInt(giftInfo[i].price, 10);
     }
 
     return (
@@ -142,7 +143,6 @@ class BudgetUserTableRow extends React.Component {
         return (
           <div key={giftInfo.id} className="gift-row-flex">
             <div className="gift-outer">
-              <div className="gift-pic">pic</div>
               <div className="gift-name">{giftInfo.giftName} {giftInfo.giftAvailability}</div>
             </div>
             <div className="gift-price">${giftInfo.price}</div>
@@ -154,19 +154,31 @@ class BudgetUserTableRow extends React.Component {
                   this.openDeleteGiftModal(giftInfo.id);
                 }}
               />
-              <div className="checkbox-div"><input className="checkbox"
-                type="checkbox"
-                checked={giftInfo.bought}
-                onChange={(e) => {
-                  this.checkStatus(e, giftInfo.id);
-                }}
-              />
+              <div className="checkbox-div">
+                <label className="container" name="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={giftInfo.bought}
+                    onChange={(e) => {
+                      this.checkStatus(e, giftInfo.id);
+                    }}
+                  />
+                  <span className="checkmark checkmark-black" />
+                </label>
               </div>
             </div>
           </div>
         );
       });
     };
+
+    // <input className="checkbox"
+    //             type="checkbox"
+    //             checked={giftInfo.bought}
+    //             onChange={(e) => {
+    //               this.checkStatus(e, giftInfo.id);
+    //             }}
+    //           />
 
   deleteThePerson = (e, personId) => {
     console.log('outsdie delete');

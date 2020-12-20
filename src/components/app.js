@@ -5,7 +5,6 @@ import Home from './Home';
 import TrackingHub from './TrackingHub';
 import BudgetHub from './BudgetHub';
 import ChooseBudget from './ChooseBudget';
-import MailTest from './MailTest';
 
 const App = (props) => {
   return (
@@ -22,7 +21,6 @@ const App = (props) => {
               <Route path="/budget" component={BudgetHub} />
               <Route path="/choosebudget" component={ChooseBudget} />
               <Route path="/tracking" component={TrackingHub} />
-              <Route path="/mailtest" component={MailTest} />
             </Switch>
           </CSSTransition>
         </TransitionGroup>

@@ -30,6 +30,7 @@ body{
 }
 
 
+
 /************************************ fade transitions ******************/
 .fade-appear, .fade-enter{
     opacity: 0;
@@ -60,8 +61,6 @@ justify-content: space-between;
 align-items: center;
 position: relative;
 z-index: 3;
-
-background: $navynight;
 border-radius: 0px 0px 60px 60px;
 }
 
@@ -134,10 +133,11 @@ line-height: 24px;
 display: flex;
 align-items: center;
 text-align: center;
+color:  #002863;
 }
 
 .white{
-    color: $white;
+    color: #002863;
     font-family: $josefin;
 }
 
@@ -167,8 +167,9 @@ text-align: center;
     align-items: center;
     position: absolute;
     width: 100%;
-    min-height: 100%;
-    background-color: $noblefir;
+    height: 100%;
+    z-index: -10000;
+    overflow: hidden;
 }
 
 .page-upper{
@@ -176,7 +177,7 @@ text-align: center;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: 94%;
 }
 
 .home-center-section{
@@ -184,7 +185,6 @@ text-align: center;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 20vh;
 }
 
 .home-center-left{
@@ -251,7 +251,7 @@ text-align: center;
 }
 
 .home-center-right{
-    width: 500px;
+    width: 380px;
 }
 
 
@@ -273,6 +273,7 @@ text-align: center;
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: max-content;
 }
 
 main { margin: auto; max-width: 960px; }
@@ -466,7 +467,10 @@ color: #FFF5F5;
 
 .gift-row-flex{
     width: 960px;
-    height: 56px;
+    min-height: 56px;
+    height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
     left: 262px;
     top: 735px;
     display: flex;
@@ -482,7 +486,7 @@ background: #FFF5F5;
 }
 
 .gift-outer{
-    width: 34vw;
+    width: 34.5vw;
     display: flex;
     align-items: center;
 }
@@ -496,6 +500,7 @@ background: #FFF5F5;
     line-height: 24px;
     display: flex;
     align-items: center;
+    margin-left: 20px;
 
 
 color: #0E0B0B;
@@ -691,6 +696,17 @@ width: 10vw;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: 100%;
+    justify-content: space-around;
+}
+
+.background{
+    position: absolute;
+    width: 100%;
+    z-index: -100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100%;
     justify-content: space-around;
 }
@@ -701,7 +717,7 @@ width: 10vw;
 
 .budget-center{
 width: 508px;
-height: 566px;
+height: 500px;
 
 /* noble fir */
 
@@ -755,7 +771,7 @@ margin-bottom: 25px;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 255px;
+    width: 240px;
     height: 66px;
     z-index: -1;
     background: $rosy;
@@ -921,10 +937,54 @@ width: 398px;
 height: 262px;
 left: 101px;
 top: 307px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 
 /* rosy cheeks */
 
 background: #FF77E1;
+}
+
+.from-box{
+    width: 97px;
+height: 28px;
+left: 150px;
+top: 52px;
+margin-bottom: 10px;
+
+
+
+background: #81D7AD;
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+
+display: inline-flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+
+
+color: #0E0B0B;
+}
+
+.message-box{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+width: 320px;
+height: 124px;
+left: 39px;
+top: 104px;
+
+background: #002863;
 }
 
 .to-box{
@@ -934,23 +994,55 @@ font-family: Josefin Sans;
 font-style: normal;
 font-weight: normal;
 font-size: 12px;
+margin-bottom: 10px;
 line-height: 12px;
-/* identical to box height */
+justify-content: center;
 
-display: flex;
+
+display: inline-flex;
 align-items: center;
 text-align: center;
 letter-spacing: 0.03em;
 
-/* white as winter snow */
+
 
 color: #FFF5F5;
 
-/* rudolph */
+
 
 background: #F35849;
 }
 
+.tracking-number-box{
+    width: 398px;
+height: 48px;
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+
+display: flex;
+align-items: center;
+letter-spacing: 0.03em;
+
+color: #000000;
+
+background: #FFF5F5;
+}
+
+
+.logo-white-email{
+font-family: SirinStencil;
+font-style: normal;
+font-weight: normal;
+font-size: 36px;
+line-height: 52px;
+display: flex;
+align-items: center;
+text-align: center;
+color: white;
+}
 
 /************************* Modals *****************/
 
@@ -1823,3 +1915,190 @@ height: 39px;
 border: 2px solid #0E0B0B;
 box-sizing: border-box;
 }
+
+.select-box select {
+	background: transparent;
+	width: 200px;
+	height: 35px;
+	padding: 5px;
+	font-size: 16px;
+	line-height: 1;
+	border: 0;
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+
+.select-box {
+	width: 180px;
+	height: 35px;
+	overflow: hidden;
+	background: url(https://dl.dropbox.com/u/122540013/img/arrow.png) no-repeat right #fff;
+	border: 1px solid #ddd;
+	border-radius: 3px 5px 5px 3px;
+}
+
+.select-box select {
+	padding-right: 0;
+	vertical-align: top!important;
+	text-align: left;
+	height: auto;
+	line-height: 1em;
+}
+select {text-align-last:center; }
+
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    margin-top: 40px;
+    transition: 200ms ease all;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    position: absolute;
+    box-sizing: border-box;
+  }
+
+  .checkmark-white{
+    border: 3px solid $white;
+  }
+
+  .checkmark-black{
+    border: 3px solid #023535;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+    background-image: url('../images/present.svg');
+    transition: 150ms ease all;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+    transition: 150ms ease all;
+    opacity: 1;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    width: 21px;
+    height: 27px;
+    top: -13px;
+    left: -3px;
+    background-image: url('../images/present.svg');
+  }
+
+
+  .yellow-box{
+    width: 837px;
+    height: 329px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* five golden rings */
+    
+    background: #F5DA77;
+  }
+
+  .thanks-button{
+    width: 82px;
+    height: 28px;
+    
+    /* rudolph */
+    
+    background: #F35849;
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+/* white as winter snow */
+font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+justify-content: center;
+color: #FFF5F5;
+  }
+
+  .sign-up-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    width: 112px;
+    height: 28px;
+    margin-top: 20px;
+    /* navy night */
+    justify-content: center;
+    font-family: Josefin Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 12px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.03em;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+    background: #002863;
+  }
+
+  button{
+      cursor: pointer;
+  }

@@ -13,6 +13,7 @@ import { updateBudget } from '../actions';
 // import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import BudgetTable from './BudgetTable';
 import NavBar from './NavBar';
+import pink from '../../images/pink.png';
 
 class BudgetHub extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class BudgetHub extends Component {
           for (const [key] of Object.entries(giftInfo)) {
             console.log(giftInfo);
             if (giftInfo[key].bought) {
-              total += giftInfo[key].price;
+              total += parseInt(giftInfo[key].price, 10);
             }
           }
         }
@@ -154,7 +155,7 @@ class BudgetHub extends Component {
           for (let i = 0; i < peopleList.length; i++) {
             const { giftInfo } = peopleList[i];
             for (const [key] of Object.entries(giftInfo)) {
-              total += giftInfo[key].price;
+              total += parseInt(giftInfo[key].price, 10);
             }
           }
 
@@ -269,6 +270,7 @@ class BudgetHub extends Component {
           });
         }
         this.closeBudgetModal();
+        window.location.reload();
       }
 
       grabBudget = (e) => {
@@ -279,7 +281,8 @@ class BudgetHub extends Component {
 
       render() {
         return (
-          <div className="homepage-outer">
+          <div className="background">
+            <img src={pink} alt="background" className="homepage-outer" />
             <NavBar />
             <div className="budget-section">
               <h1 className="title">Budget</h1>
@@ -307,7 +310,7 @@ class BudgetHub extends Component {
               <div className="adding-person-section">
                 <div className="budget-box">
                   <div className="budget-dollar-sign">$</div>
-                  <input className="budget-input" id="budget-input" onChange={this.grabBudget} placeholder="1000" />
+                  <input autoComplete="off" className="budget-input" id="budget-input" onChange={this.grabBudget} placeholder="1000" />
                 </div>
                 <button type="button" className="button-adding-budget" onClick={this.submitBudget}> Update my budget </button>
               </div>

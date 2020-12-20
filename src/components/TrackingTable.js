@@ -136,8 +136,8 @@ class TrackingTable extends Component {
               <option>USPS</option>
               <option>Other</option>
             </select>
-            <input className="tracking-number-input" placeholder="Tracking Number" onChange={this.grabNumber} />
-            <input className="note-input" placeholder="Purchase Description" onChange={this.grabNote} />
+            <input autoComplete="off" className="tracking-number-input" placeholder="Tracking Number" onChange={this.grabNumber} />
+            <input autoComplete="off" className="note-input" placeholder="Purchase Description" onChange={this.grabNote} />
             <select type="select" id="dropdown">
               {this.props.user.people.map((person) => {
                 return <option key={person.name} value={person.name}>{person.name}</option>;

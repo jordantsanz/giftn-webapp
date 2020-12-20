@@ -32,7 +32,7 @@ class Login extends Component {
 
       refreshTokenSetup(res);
       // this.props.logInUser(res.profileObj);
-      this.props.addUser(res.profileObj.googleId, res.profileObj.name);
+      this.props.addUser(res.profileObj.googleId, res.profileObj.name, this.props.history);
     };
 
     onFailure = (res) => {

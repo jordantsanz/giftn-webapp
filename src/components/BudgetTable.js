@@ -83,6 +83,7 @@ class BudgetTable extends Component {
     let id = '';
     const rightPerson = $('#dropdown-add-gift').val();
     for (let i = 0; i < this.props.user.people.length; i++) {
+      console.log(this.props.user.people);
       console.log(this.props.user.people[i]);
       console.log('name', this.props.user.people[i].name);
       console.log('state', this.state.person);
@@ -202,7 +203,6 @@ class BudgetTable extends Component {
               <button type="button" className="add-gift-button" onClick={this.submitGift}>Add to my list</button>
             </div>
           </Modal>
-
         </div>
       </div>
     );

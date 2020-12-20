@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { callUPS } from '../actions';
 import Login from './Login';
+import green from '../../images/green.png';
+import logowhite from '../../images/logowhite.png';
+import animation from '../../images/animation.gif';
 
 class Home extends Component {
   constructor(props) {
@@ -42,9 +45,10 @@ class Home extends Component {
 
     render() {
       return (
-        <div className="page-holder">
+        <div className="background">
+          <img className="page-holder" alt="background" src={green} />
           <div className="page-upper">
-            <div className="logo-home">giftn</div>
+            <img alt="lgoo" className="logo-white" src={logowhite} />
           </div>
           <div className="home-center-section">
             <div className="home-center-left">
@@ -55,7 +59,7 @@ class Home extends Component {
                 <Login class="login-button-home" text="Login with Google" fromHome history={this.props.history} />
               </NavLink>
             </div>
-            <img alt="holiday tree" className="home-center-right" />
+            <img alt="holiday tree" src={animation} className="home-center-right" />
           </div>
         </div>
       );

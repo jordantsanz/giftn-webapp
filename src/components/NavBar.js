@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Login from './Login';
 import Logout from './Logout';
+import logoblack from '../../images/logoblack.png';
 
 class NavBar extends Component {
     checkLog = () => {
@@ -22,7 +23,7 @@ class NavBar extends Component {
       return (
         <div className="nav-holder">
           <NavLink to="/">
-            <div className="logo">logo </div>
+            <img src={logoblack} className="logo" alt="logo" />
           </NavLink>
           <div className="right-side">
             <NavLink to="/budget">

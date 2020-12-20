@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
@@ -60,7 +61,6 @@ class TrackingUserTableRow extends React.Component {
     return (
       <div className="gift-row-flex">
         <div className="gift-outer">
-          <div className="gift-pic">pic</div>
           <div className="gift-name">{this.props.row.note}</div>
         </div>
       </div>
@@ -128,12 +128,17 @@ class TrackingUserTableRow extends React.Component {
               this.openDeleteModal(e);
             }}
           />
-          <input className="checkbox"
-            type="checkbox"
-            onChange={(e) => {
-              this.clickMe(e, this.props.row.id);
-            }}
-          />
+          <div className="checkbox-div">
+            <label className="container" name="checkbox">
+              <input
+                type="checkbox"
+                onChange={(e) => {
+                  this.clickMe(e, this.props.row.id);
+                }}
+              />
+              <span className="checkmark checkmark-white" />
+            </label>
+          </div>
         </div>
       </div>,
       this.state.expanded && (
