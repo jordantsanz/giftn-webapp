@@ -40,7 +40,6 @@ class Home extends Component {
       this.setState({
         clicked: true,
       });
-      this.props.history.push('/chooseBudget');
     }
 
     render() {

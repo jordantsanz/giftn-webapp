@@ -491,6 +491,12 @@ background: #FFF5F5;
     align-items: center;
 }
 
+.gift-outer-2{
+    width: 95%;
+    display: flex;
+    align-items: center;
+}
+
 .gift-name{
     font-family: $josefin;
     font-style: normal;
@@ -1526,7 +1532,7 @@ background: #FF77E1;
 
 .add-gift-modal{
     width: 447px;
-    height: 378px;
+    height: 430px;
     
     /* navy night */
     
@@ -1911,9 +1917,68 @@ background: #023535;
 height: 39px;
 
 /* coal in your stocking */
+background: transparent;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
 
+display: flex;
+align-items: center;
+text-align: center;
+
+/* five golden rings */
+
+color: #F5DA77;
 border: 2px solid #0E0B0B;
 box-sizing: border-box;
+}
+
+#email.note-input{
+    background: transparent;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* five golden rings */
+
+color: #F5DA77;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
+input:focus::placeholder{
+    color: transparent;
+}
+
+#email.note-input::placeholder{
+    background: transparent;
+    font-family: $josefin;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    /* identical to box height */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* five golden rings */
+    
+    color: #F5DA77;
+    padding-right: 12px;
 }
 
 .select-box select {

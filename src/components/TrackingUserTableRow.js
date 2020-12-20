@@ -60,7 +60,7 @@ class TrackingUserTableRow extends React.Component {
     console.log(this.props.row);
     return (
       <div className="gift-row-flex">
-        <div className="gift-outer">
+        <div className="gift-outer-2">
           <div className="gift-name">{this.props.row.note}</div>
         </div>
       </div>

@@ -192,8 +192,7 @@ class TrackingTable extends Component {
               })}
             </select>
             <div>
-              <div>Email:</div>
-              <input type="text" id="email" name="email" onChange={this.onInputChangeEmail} />
+              <input type="text" id="email" className="note-input" placeholder="Email" name="email" onChange={this.onInputChangeEmail} />
             </div>
             <button type="button" className="email-modal-submit" onClick={this.sendEmail}>Send email</button>
           </Modal>
