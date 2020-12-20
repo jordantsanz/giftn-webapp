@@ -175,7 +175,7 @@ export function deletePerson(user, personID) {
     const newuser = user;
     for (let i = 0; i < user.people.length; i++) {
       if (user.people[i].id == personID) {
-        delete newuser.people[i];
+        newuser.people.splice(i, 1);
       }
     }
 

@@ -73,9 +73,11 @@ class BudgetUserTableRow extends React.Component {
         if (e.target.checked) {
           console.log('buy gift called');
           this.props.buyGift(this.props.user, this.props.person.id, giftInfo[i]);
+          this.props.reload();
         } else { // if now unchecked
           console.log('wishlist gift called');
           this.props.wishlistGift(this.props.user, this.props.person.id, giftInfo[i]);
+          this.props.reload();
         }
       }
     }
@@ -185,6 +187,7 @@ class BudgetUserTableRow extends React.Component {
     console.log('personId', personId);
     this.props.deletePerson(this.props.user, personId);
     this.closeDeletePersonModal();
+    this.props.reload();
   }
 
   openDeletePersonModal = () => {
@@ -220,6 +223,7 @@ class BudgetUserTableRow extends React.Component {
     this.setState({
       giftToBeDeleted: '',
     });
+    this.props.reload();
   }
 
   // renders the component

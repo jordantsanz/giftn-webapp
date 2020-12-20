@@ -123,6 +123,7 @@ class TrackingTable extends Component {
       trackingNumber: found,
     };
     this.props.sendEmail(emailObject);
+    this.closeEmailModal();
   }
 
   render() {

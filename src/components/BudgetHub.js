@@ -23,10 +23,19 @@ class BudgetHub extends Component {
       gauge2: false,
       budgetModal: false,
       budget: '',
+      percent1: '',
+      percent2: '',
+      label1: '',
+      label2: '',
+      total1: '',
+      total2: '',
+      chart1: '',
+      chart2: '',
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(oldProps) {
+    console.log('oldprops', oldProps);
     if (this.props.user.name != '' && !this.state.gauge && !this.state.gauge2) {
       this.makeGauge(this.props.user.people, this.props.user.budget);
       this.makeGauge2(this.props.user.people, this.props.user.budget);
@@ -59,10 +68,10 @@ class BudgetHub extends Component {
 
         console.log(total);
 
+        const chart2 = am4core.create('chartdiv2', am4charts.GaugeChart); // make gauge 2
         const percent = Math.round((total / totalBudget) * 100);
-        const chart = am4core.create('chartdiv2', am4charts.GaugeChart);
-        chart.innerRadius = am4core.percent(82);
-        chart.data = [{
+        chart2.innerRadius = am4core.percent(82);
+        chart2.data = [{
           value: percent,
           category: '',
           full: 100,
@@ -74,13 +83,13 @@ class BudgetHub extends Component {
         /**
        * Normal axis
        */
-        chart.innerRadius = am4core.percent(80);
+        chart2.innerRadius = am4core.percent(80);
 
         // Set number format
-        chart.numberFormatter.numberFormat = '#.#\'%\'';
+        chart2.numberFormatter.numberFormat = '#.#\'%\'';
 
         // Create axes
-        const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+        const categoryAxis = chart2.yAxes.push(new am4charts.CategoryAxis());
         categoryAxis.dataFields.category = 'category';
         categoryAxis.renderer.grid.template.location = 0;
         categoryAxis.renderer.grid.template.strokeOpacity = 0;
@@ -91,7 +100,7 @@ class BudgetHub extends Component {
         });
         categoryAxis.renderer.minGridDistance = 10;
 
-        const valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+        const valueAxis = chart2.xAxes.push(new am4charts.ValueAxis());
         valueAxis.renderer.grid.template.strokeOpacity = 0;
         valueAxis.min = 0;
         valueAxis.max = 100;
@@ -99,7 +108,7 @@ class BudgetHub extends Component {
         valueAxis.renderer.labels.template.disabled = true;
 
         // Create series
-        const series1 = chart.series.push(new am4charts.RadarColumnSeries());
+        const series1 = chart2.series.push(new am4charts.RadarColumnSeries());
         series1.dataFields.valueX = 'full';
         series1.dataFields.categoryY = 'category';
         series1.clustered = false;
@@ -109,7 +118,7 @@ class BudgetHub extends Component {
         series1.columns.template.strokeWidth = 0;
         series1.columns.template.radarColumn.cornerRadius = 20;
 
-        const series2 = chart.series.push(new am4charts.RadarColumnSeries());
+        const series2 = chart2.series.push(new am4charts.RadarColumnSeries());
         series2.dataFields.valueX = 'value';
         series2.dataFields.categoryY = 'category';
         series2.clustered = false;
@@ -120,7 +129,7 @@ class BudgetHub extends Component {
           return am4core.color('#81D7AD');
         });
 
-        const label = chart.radarContainer.createChild(am4core.Label);
+        const label = chart2.radarContainer.createChild(am4core.Label);
         label.isMeasured = false;
         label.fontSize = 45;
         label.x = am4core.percent(50);
@@ -131,7 +140,7 @@ class BudgetHub extends Component {
         label.text = `$${total}`;
         label.fontFamily = 'Abril Fatface';
 
-        const label2 = chart.chartContainer.createChild(am4core.Label);
+        const label2 = chart2.chartContainer.createChild(am4core.Label);
         label2.text = `You’ve spent ${percent}% of 
         your $${totalBudget} budget.`;
         label2.align = 'center';
@@ -140,10 +149,11 @@ class BudgetHub extends Component {
         label2.fontSize = 24;
         label2.width = 100;
 
-        this.chart2 = chart;
+        this.chart2 = chart2;
 
         this.setState({
           gauge2: true,
+          chart2,
         });
       }
     };
@@ -159,10 +169,12 @@ class BudgetHub extends Component {
             }
           }
 
+          const chart = am4core.create('chartdiv', am4charts.GaugeChart); // make gauge 1
+
           console.log('total gauge: ', total);
 
           const percent = Math.round((total / totalBudget) * 100);
-          const chart = am4core.create('chartdiv', am4charts.GaugeChart);
+
           chart.innerRadius = am4core.percent(82);
           chart.data = [{
             value: percent,
@@ -246,9 +258,57 @@ class BudgetHub extends Component {
 
           this.setState({
             gauge: true,
+            chart,
           });
         }
       };
+
+      reload = () => {
+        // calculates ones that are already bought
+        let total = 0;
+        for (let i = 0; i < this.props.user.people.length; i++) {
+          const { giftInfo } = this.props.user.people[i];
+          for (const [key] of Object.entries(giftInfo)) {
+            console.log(giftInfo);
+            if (giftInfo[key].bought) {
+              total += parseInt(giftInfo[key].price, 10);
+            }
+          }
+        }
+        const percent = Math.round((total / this.props.user.budget) * 100);
+        this.state.chart2.innerRadius = am4core.percent(82);
+        this.state.chart2.data = [{
+          value: percent,
+          category: '',
+          full: 100,
+        },
+        ];
+
+        this.state.chart2.radarContainer.children.values[5].text = `$${total}`;
+        this.state.chart2.chartContainer.children.values[3].text = `You’ve spent ${percent}% 
+        of your $${this.props.user.budget} budget.`;
+
+        // calculates the entire total
+        let total2 = 0;
+        for (let j = 0; j < this.props.user.people.length; j++) {
+          const giftInfo2 = this.props.user.people[j].giftInfo;
+          for (const [key] of Object.entries(giftInfo2)) {
+            total2 += parseInt(giftInfo2[key].price, 10);
+          }
+        }
+        const percent2 = Math.round((total2 / this.props.user.budget) * 100);
+        this.state.chart.data = [{
+          value: percent2,
+          category: '',
+          full: 100,
+        },
+        ];
+        this.state.chart.validateData();
+        this.state.chart.radarContainer.children.values[5].text = `$${total2}`;
+        this.state.chart.chartContainer.children.values[3].text = `You’ve planned ${percent2}% 
+        of your $${this.props.user.budget} budget.`;
+        console.log('reloaded!');
+      }
 
       openBudgetModal = () => {
         this.setState({
@@ -270,7 +330,6 @@ class BudgetHub extends Component {
           });
         }
         this.closeBudgetModal();
-        window.location.reload();
       }
 
       grabBudget = (e) => {
@@ -317,7 +376,7 @@ class BudgetHub extends Component {
             </Modal>
             <div className="gift-section">
               <h1 className="title">Gift List</h1>
-              <BudgetTable people={this.props.user.people} />
+              <BudgetTable people={this.props.user.people} reload={this.reload} />
             </div>
           </div>
         );

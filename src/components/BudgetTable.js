@@ -109,6 +109,7 @@ class BudgetTable extends Component {
       addingGift: '',
     });
     this.closeGiftModal();
+    this.props.reload();
   }
 
   peopleOptions = () => {
@@ -153,7 +154,7 @@ class BudgetTable extends Component {
             </div>
           </div>
           <div className="table-holder">
-            {this.props.people.map((person) => <BudgetUserTableRow person={person} />)}
+            {this.props.people.map((person) => <BudgetUserTableRow person={person} reload={this.props.reload} />)}
           </div>
           <Modal
             isOpen={this.state.personModal}
