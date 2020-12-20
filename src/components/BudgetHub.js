@@ -10,28 +10,30 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import BudgetTable from './BudgetTable';
 import NavBar from './NavBar';
 
-const people = [
-  {
-    name: 'Wylie',
-    giftInfo: [
-      {
-        giftName: 'Dildo',
-        price: 20,
-        bought: false,
-      },
-    ],
-  },
-  {
-    name: 'Jordan',
-    giftInfo: [
-      {
-        giftName: 'your mom',
-        price: 2000,
-        bought: false,
-      },
-    ],
-  },
-];
+// const people = [
+//   {
+//     name: 'Wylie',
+//     id: 2002,
+//     giftInfo: [
+//       {
+//         giftName: 'Dildo',
+//         price: 20,
+//         bought: false,
+//       },
+//     ],
+//   },
+//   {
+//     name: 'Jordan',
+//     id: 2003,
+//     giftInfo: [
+//       {
+//         giftName: 'your mom',
+//         price: 2000,
+//         bought: false,
+//       },
+//     ],
+//   },
+// ];
 
 class BudgetHub extends Component {
   constructor(props) {
@@ -352,7 +354,7 @@ class BudgetHub extends Component {
             </div>
             <div className="gift-section">
               <h1 className="title">Gift List</h1>
-              <BudgetTable people={people} />
+              <BudgetTable people={this.props.user.people} />
             </div>
           </div>
         );
@@ -361,7 +363,7 @@ class BudgetHub extends Component {
 
 function mapStateToProps(reduxState) {
   return {
-    name: reduxState.user.name,
+    user: reduxState.user,
   };
 }
 

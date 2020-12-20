@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { connect } from 'react-redux';
-import { logInUser } from '../actions';
+import { addUser } from '../actions';
 
-const clientId = '1058585226378-dqi37pj4a7h6edcvnbma6pqbq1uk3dn0.apps.googleusercontent.com';
+const clientId = '378735924994-knhso2dtafl79msh19jbl9d3hvfuut9h.apps.googleusercontent.com';
 
 const refreshTokenSetup = (res) => {
   let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
@@ -31,7 +31,8 @@ class Login extends Component {
       }
 
       refreshTokenSetup(res);
-      this.props.logInUser(res.profileObj);
+      // this.props.logInUser(res.profileObj);
+      this.props.addUser(res.profileObj.googleId, res.profileObj.name);
     };
 
     onFailure = (res) => {
@@ -65,4 +66,4 @@ function mapStateToProps(reduxState) {
     user: reduxState.user,
   };
 }
-export default connect(mapStateToProps, { logInUser })(Login);
+export default connect(mapStateToProps, { addUser })(Login);

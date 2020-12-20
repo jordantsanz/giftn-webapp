@@ -2,6 +2,8 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateBudget } from '../actions';
 
 function isLetter(str) {
   return str.length === 1 && str.match(/[a-z]/i);
@@ -27,14 +29,17 @@ class ChooseBudget extends Component {
       if (budget != undefined && budget != null) {
         for (let i = 0; i < budget.length; i++) {
           if (isLetter(budget[i])) {
-            alert('Please enter in a valid budget.');
+            // alert('Please enter in a valid budget.');
             return;
           }
         }
-        console.log('submit budget');
-        this.props.history.push('/budget');
+        if (this.props.user.id != '') {
+          console.log(this.props.user);
+          this.props.updateBudget(this.props.user, this.state.budget);
+          this.props.history.push('/budget');
+        }
       } else {
-        alert('Please enter in a valid budget');
+        // alert('Please enter in a valid budget');
       }
     }
 
@@ -61,4 +66,10 @@ class ChooseBudget extends Component {
     }
 }
 
-export default ChooseBudget;
+function mapStateToProps(reduxState) {
+  return {
+    // address: reduxState.address,
+    user: reduxState.user,
+  };
+}
+export default connect(mapStateToProps, { updateBudget })(ChooseBudget);

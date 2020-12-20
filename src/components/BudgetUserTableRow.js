@@ -6,7 +6,9 @@ import React from 'react';
 import '../style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 import { slideDown, slideUp } from './anim';
+import { deletePerson, buyGift, wishlistGift } from '../actions';
 
 class BudgetUserTableRow extends React.Component {
   constructor(props) {
@@ -17,7 +19,19 @@ class BudgetUserTableRow extends React.Component {
   }
 
   calculateTotal = () => {
-    const { giftInfo } = this.props.person;
+    const giftArray = [];
+    for (const [key, value] of Object.entries(this.props.person.giftInfo)) {
+      const giftId = key;
+      const giftInfo = value;
+      giftArray.push({
+        id: giftId,
+        giftName: giftInfo.giftName,
+        price: giftInfo.price,
+        link: giftInfo.link,
+        bought: giftInfo.bought,
+      });
+    }
+    const giftInfo = giftArray;
     let total = 0;
 
     for (let i = 0; i < giftInfo.length; i++) {
@@ -31,12 +45,25 @@ class BudgetUserTableRow extends React.Component {
 
   // checks the status of a checkbox to see if it has been updated to bought
   checkStatus = (e, id) => {
-    for (let i = 0; i < this.props.person.giftInfo.length; i++) {
-      if (this.props.person.giftInfo[i] == id) {
+    const giftArray = [];
+    for (const [key, value] of Object.entries(this.props.person.giftInfo)) {
+      const giftId = key;
+      const giftInfo = value;
+      giftArray.push({
+        id: giftId,
+        giftName: giftInfo.giftName,
+        price: giftInfo.price,
+        link: giftInfo.link,
+        bought: giftInfo.bought,
+      });
+    }
+    const giftInfo = giftArray;
+    for (let i = 0; i < giftInfo.length; i++) {
+      if (giftInfo[i] == id) {
         if (e.target.checked) {
-          this.props.person.giftInfo[i].bought = true;
+          this.props.buyGift(this.props.user, giftInfo[i]);
         } else {
-          this.props.person.giftInfo[i].bought = false;
+          this.props.wishlistGift(this.props.user, giftInfo[i]);
         }
         return; // need to send call to update in database
       }
@@ -80,36 +107,54 @@ class BudgetUserTableRow extends React.Component {
     }
   }
 
-  // fired when add gift button clicked; adds a gift to the gift array
-  addGift = () => {
-    this.props.person.giftInfo.push({
-      id: 2000, giftName: 'key', price: 200, bought: false,
-    });
+  makeGiftArray = () => {
+    const giftArray = [];
+    for (const [key, value] of Object.entries(this.props.person.giftInfo)) {
+      const giftId = key;
+      const giftInfo = value;
+      giftArray.push({
+        id: giftId,
+        giftName: giftInfo.giftName,
+        price: giftInfo.price,
+        link: giftInfo.link,
+        bought: giftInfo.bought,
+      });
+    }
+    return giftArray;
   }
 
-  // displays gifts when the row is expanded
-  renderGifts = () => {
-    return this.props.person.giftInfo.map((giftInfo) => {
-      return (
-        <div className="gift-row-flex">
-          <div className="gift-outer">
-            <div className="gift-pic">pic</div>
-            <div className="gift-name">{giftInfo.giftName} {giftInfo.giftAvailability}</div>
-          </div>
-          <div className="gift-price">${giftInfo.price}</div>
-          <div className="button-cell">
-            <FontAwesomeIcon icon={faTrash} className="trash-red" />
-            <div className="checkbox-div"><input className="checkbox"
-              type="checkbox"
-              onChange={(e) => {
-                this.clickMe(e, giftInfo.id);
-              }}
-            />
+    // displays gifts when the row is expanded
+    renderGifts = () => {
+      console.log(this.props.person.giftInfo);
+      const giftArray = this.makeGiftArray();
+
+      return giftArray.map((giftInfo) => {
+        return (
+          <div key={giftInfo.id} className="gift-row-flex">
+            <div className="gift-outer">
+              <div className="gift-pic">pic</div>
+              <div className="gift-name">{giftInfo.giftName} {giftInfo.giftAvailability}</div>
+            </div>
+            <div className="gift-price">${giftInfo.price}</div>
+            <div className="button-cell">
+              <FontAwesomeIcon icon={faTrash} className="trash-red" />
+              <div className="checkbox-div"><input className="checkbox"
+                type="checkbox"
+                onChange={(e) => {
+                  this.clickMe(e, giftInfo.id);
+                }}
+              />
+              </div>
             </div>
           </div>
-        </div>
-      );
-    });
+        );
+      });
+    };
+
+  deleteThePerson = (e, personId) => {
+    console.log('outsdie delete');
+    console.log('personId', personId);
+    this.props.deletePerson(this.props.user, personId);
   }
 
   // renders the component
@@ -119,7 +164,13 @@ class BudgetUserTableRow extends React.Component {
         <div className="name-cell">{this.props.person.name}</div>
         <div className="total-cell">{this.calculateTotal()}</div>
         <div className="buttons-cell">
-          <FontAwesomeIcon icon={faTrash} className="trash" />
+          <FontAwesomeIcon icon={faTrash}
+            className="trash"
+            id="deletebutton"
+            onClick={(e) => {
+              this.deleteThePerson(e, this.props.person.id);
+            }}
+          />
           <FontAwesomeIcon icon={faChevronDown} className="trash" />
         </div>
       </div>,
@@ -136,4 +187,10 @@ class BudgetUserTableRow extends React.Component {
   }
 }
 
-export default BudgetUserTableRow;
+function mapStateToProps(reduxState) {
+  return {
+    user: reduxState.user,
+  };
+}
+
+export default connect(mapStateToProps, { deletePerson, buyGift, wishlistGift })(BudgetUserTableRow);
