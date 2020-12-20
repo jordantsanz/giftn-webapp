@@ -62,7 +62,7 @@ class BudgetHub extends Component {
         const chart = am4core.create('chartdiv2', am4charts.GaugeChart);
         chart.innerRadius = am4core.percent(82);
         chart.data = [{
-          value: 20,
+          value: percent,
           category: '',
           full: 100,
         },
@@ -86,7 +86,7 @@ class BudgetHub extends Component {
         categoryAxis.renderer.labels.template.horizontalCenter = 'right';
         categoryAxis.renderer.labels.template.fontWeight = 500;
         categoryAxis.renderer.labels.template.adapter.add('fill', (fill, target) => {
-          return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
+          return (target.dataItem.index >= 0) ? am4core.color('#81D7AD;') : fill;
         });
         categoryAxis.renderer.minGridDistance = 10;
 
@@ -95,14 +95,15 @@ class BudgetHub extends Component {
         valueAxis.min = 0;
         valueAxis.max = 100;
         valueAxis.strictMinMax = true;
+        valueAxis.renderer.labels.template.disabled = true;
 
         // Create series
         const series1 = chart.series.push(new am4charts.RadarColumnSeries());
         series1.dataFields.valueX = 'full';
         series1.dataFields.categoryY = 'category';
         series1.clustered = false;
-        series1.columns.template.fill = new am4core.InterfaceColorSet().getFor('alternativeBackground');
-        series1.columns.template.fillOpacity = 0.08;
+        series1.columns.template.fill = am4core.color('#0E0B0B');
+        series1.columns.template.fillOpacity = 1;
         series1.columns.template.cornerRadiusTopLeft = 20;
         series1.columns.template.strokeWidth = 0;
         series1.columns.template.radarColumn.cornerRadius = 20;
@@ -115,21 +116,28 @@ class BudgetHub extends Component {
         series2.columns.template.radarColumn.cornerRadius = 20;
 
         series2.columns.template.adapter.add('fill', (fill, target) => {
-          return chart.colors.getIndex(target.dataItem.index);
+          return am4core.color('#81D7AD');
         });
 
-        const title = chart.titles.create();
-        title.text = 'Budget Spent';
-        title.marginBottom = 30;
-        title.fontSize = 10;
-        title.marginTop = 30;
-        title.fontFamily = 'Roboto';
-        title.fill = '#000000';
-        title.padding(10, 10, 10, 10);
+        const label = chart.radarContainer.createChild(am4core.Label);
+        label.isMeasured = false;
+        label.fontSize = 45;
+        label.x = am4core.percent(50);
+        label.y = am4core.percent(100);
+        label.horizontalCenter = 'middle';
+        label.verticalCenter = 'bottom';
+        label.fill = am4core.color('#81D7AD');
+        label.text = `$${total}`;
+        label.fontFamily = 'Abril Fatface';
 
         const label2 = chart.chartContainer.createChild(am4core.Label);
-        label2.text = '*Percentage of unique websites visited that are green';
-        label2.align = 'right';
+        label2.text = `You’ve spent ${percent}% of 
+        your $${totalBudget} budget.`;
+        label2.align = 'center';
+        label2.fontFamily = 'Josefin Sans';
+        label2.fontWeight = 400;
+        label2.fontSize = 24;
+        label2.width = 100;
 
         this.chart2 = chart;
 
@@ -156,7 +164,7 @@ class BudgetHub extends Component {
           const chart = am4core.create('chartdiv', am4charts.GaugeChart);
           chart.innerRadius = am4core.percent(82);
           chart.data = [{
-            value: 20,
+            value: percent,
             category: '',
             full: 100,
           },
@@ -176,11 +184,11 @@ class BudgetHub extends Component {
           const categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
           categoryAxis.dataFields.category = 'category';
           categoryAxis.renderer.grid.template.location = 0;
-          categoryAxis.renderer.grid.template.strokeOpacity = 1;
+          categoryAxis.renderer.grid.template.strokeOpacity = 0;
           categoryAxis.renderer.labels.template.horizontalCenter = 'right';
-          categoryAxis.renderer.labels.template.fontWeight = 0;
+          categoryAxis.renderer.labels.template.fontWeight = 500;
           categoryAxis.renderer.labels.template.adapter.add('fill', (fill, target) => {
-            return (target.dataItem.index >= 0) ? chart.colors.getIndex(target.dataItem.index) : fill;
+            return (target.dataItem.index >= 0) ? am4core.color('#F35849') : fill;
           });
           categoryAxis.renderer.minGridDistance = 10;
 
@@ -188,6 +196,7 @@ class BudgetHub extends Component {
           valueAxis.renderer.grid.template.strokeOpacity = 0;
           valueAxis.min = 0;
           valueAxis.max = 100;
+          valueAxis.renderer.labels.template.disabled = true;
           valueAxis.strictMinMax = true;
 
           // Create series
@@ -195,8 +204,8 @@ class BudgetHub extends Component {
           series1.dataFields.valueX = 'full';
           series1.dataFields.categoryY = 'category';
           series1.clustered = false;
-          series1.columns.template.fill = new am4core.InterfaceColorSet().getFor('alternativeBackground');
-          series1.columns.template.fillOpacity = 0.08;
+          series1.columns.template.fill = am4core.color('#0E0B0B');
+          series1.columns.template.fillOpacity = 1;
           series1.columns.template.cornerRadiusTopLeft = 20;
           series1.columns.template.strokeWidth = 0;
           series1.columns.template.radarColumn.cornerRadius = 20;
@@ -209,21 +218,28 @@ class BudgetHub extends Component {
           series2.columns.template.radarColumn.cornerRadius = 20;
 
           series2.columns.template.adapter.add('fill', (fill, target) => {
-            return chart.colors.getIndex(target.dataItem.index);
+            return am4core.color('#F35849');
           });
 
-          const title = chart.titles.create();
-          title.text = 'Budget Spent';
-          title.marginBottom = 30;
-          title.fontSize = 10;
-          title.marginTop = 30;
-          title.fontFamily = 'Roboto';
-          title.fill = '#000000';
-          title.padding(10, 10, 10, 10);
+          const label = chart.radarContainer.createChild(am4core.Label);
+          label.isMeasured = false;
+          label.fontSize = 45;
+          // label.x = am4core.percent(10);
+          // label.y = am4core.percent(100);
+          label.horizontalCenter = 'middle';
+          label.verticalCenter = 'bottom';
+          label.fill = am4core.color('#F35849');
+          label.text = `$${total}`;
+          label.fontFamily = 'Abril Fatface';
 
           const label2 = chart.chartContainer.createChild(am4core.Label);
-          label2.text = '*Percentage of unique websites visited that are green';
-          label2.align = 'right';
+          label2.text = `You’ve planned ${percent}% 
+          of your $${totalBudget} budget.`;
+          label2.align = 'center';
+          label2.fontFamily = 'Josefin Sans';
+          label2.fontWeight = 400;
+          label2.fontSize = 24;
+          label2.width = 100;
 
           this.chart3 = chart;
 
