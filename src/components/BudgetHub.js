@@ -10,31 +10,6 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import BudgetTable from './BudgetTable';
 import NavBar from './NavBar';
 
-// const people = [
-//   {
-//     name: 'Wylie',
-//     id: 2002,
-//     giftInfo: [
-//       {
-//         giftName: 'Dildo',
-//         price: 20,
-//         bought: false,
-//       },
-//     ],
-//   },
-//   {
-//     name: 'Jordan',
-//     id: 2003,
-//     giftInfo: [
-//       {
-//         giftName: 'your mom',
-//         price: 2000,
-//         bought: false,
-//       },
-//     ],
-//   },
-// ];
-
 class BudgetHub extends Component {
   constructor(props) {
     super(props);
@@ -45,8 +20,8 @@ class BudgetHub extends Component {
   }
 
   componentDidMount() {
-    this.makeGauge();
-    this.makeGauge2();
+    this.makeGauge(this.props.user.people, this.props.user.budget);
+    this.makeGauge2(this.props.user.people, this.props.user.budget);
   }
 
   componentWillUnmount() {
@@ -59,35 +34,13 @@ class BudgetHub extends Component {
   }
 
     makeGauge2 = (peopleList, totalBudget) => {
-      const thePeople = [
-        {
-          name: 'Wylie',
-          giftInfo: [
-            {
-              giftName: 'Dildo',
-              price: 500,
-              bought: false,
-            },
-          ],
-        },
-        {
-          name: 'Jordan',
-          giftInfo: [
-            {
-              giftName: 'your mom',
-              price: 2000,
-              bought: true,
-            },
-          ],
-        },
-      ];
       if (!this.state.gauge) {
         // Create chart
         let total = 0;
         console.log(total);
-        for (let i = 0; i < thePeople.length; i++) {
+        for (let i = 0; i < peopleList.length; i++) {
           console.log('i', i);
-          const { giftInfo } = thePeople[i];
+          const { giftInfo } = peopleList[i];
           for (let j = 0; j < giftInfo.length; j++) {
             if (giftInfo[j].bought) {
               total += giftInfo[j].price;
@@ -97,7 +50,7 @@ class BudgetHub extends Component {
 
         console.log(total);
 
-        const percent = Math.round((total / 3000) * 100);
+        const percent = Math.round((total / totalBudget) * 100);
         const chart = am4core.create('chartdiv2', am4charts.GaugeChart);
         chart.innerRadius = am4core.percent(82);
 
@@ -201,34 +154,12 @@ class BudgetHub extends Component {
     };
 
       makeGauge = (peopleList, totalBudget) => {
-        const thePeople = [
-          {
-            name: 'Wylie',
-            giftInfo: [
-              {
-                giftName: 'Dildo',
-                price: 500,
-                giftAvailability: 1,
-              },
-            ],
-          },
-          {
-            name: 'Jordan',
-            giftInfo: [
-              {
-                giftName: 'your mom',
-                price: 2000,
-                giftAvailability: 0,
-              },
-            ],
-          },
-        ];
         if (!this.state.gauge) {
         // Create chart
           let total = 0;
-          for (let i = 0; i < thePeople.length; i++) {
+          for (let i = 0; i < peopleList.length; i++) {
             console.log('i', i);
-            const { giftInfo } = thePeople[i];
+            const { giftInfo } = peopleList[i];
             for (let j = 0; j < giftInfo.length; j++) {
               total += giftInfo[j].price;
             }
@@ -236,7 +167,7 @@ class BudgetHub extends Component {
 
           console.log(total);
 
-          const percent = Math.round((total / 3000) * 100);
+          const percent = Math.round((total / totalBudget) * 100);
           const chart = am4core.create('chartdiv', am4charts.GaugeChart);
           chart.innerRadius = am4core.percent(82);
 
