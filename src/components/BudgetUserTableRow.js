@@ -4,6 +4,7 @@
 /* eslint-disable react/no-string-refs */
 import React from 'react';
 import '../style.scss';
+import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -17,6 +18,9 @@ class BudgetUserTableRow extends React.Component {
     super(props);
     this.state = {
       expanded: false,
+      deletePersonModal: false,
+      deleteGiftModal: false,
+      giftToBeDeleted: '',
     };
   }
 
@@ -147,7 +151,7 @@ class BudgetUserTableRow extends React.Component {
                 className="trash-red"
                 id="deletebutton-gift"
                 onClick={(e) => {
-                  this.deleteGift(e, this.props.person.id, giftInfo);
+                  this.openDeleteGiftModal(giftInfo.id);
                 }}
               />
               <div className="checkbox-div"><input className="checkbox"
@@ -168,18 +172,88 @@ class BudgetUserTableRow extends React.Component {
     console.log('outsdie delete');
     console.log('personId', personId);
     this.props.deletePerson(this.props.user, personId);
+    this.closeDeletePersonModal();
   }
 
-  deleteGift = (e, personId, gift) => {
+  openDeletePersonModal = () => {
+    this.setState({
+      deletePersonModal: true,
+    });
+  }
+
+  closeDeletePersonModal = () => {
+    this.setState({
+      deletePersonModal: false,
+    });
+  }
+
+  openDeleteGiftModal = (giftId) => {
+    this.setState({
+      giftToBeDeleted: giftId,
+      deleteGiftModal: true,
+    });
+  }
+
+  closeDeleteGiftModal = () => {
+    this.setState({
+      deleteGiftModal: false,
+    });
+  }
+
+  deleteGift = (e, personId) => {
     console.log('deleting gift');
-    console.log('gift in budget: ', gift);
-    this.props.deleteGiftFromPerson(this.props.user, personId, gift);
+    console.log('gift in budget: ', this.state.giftToBeDeleted);
+    this.props.deleteGiftFromPerson(this.props.user, personId, this.state.giftToBeDeleted);
+    this.closeDeleteGiftModal();
+    this.setState({
+      giftToBeDeleted: '',
+    });
   }
 
   // renders the component
   render() {
     return [
       <div className="name-row" key="main" onClick={this.toggleExpander}>
+        <Modal
+          isOpen={this.state.deletePersonModal}
+            // onAfterOpen={afterOpenModal}
+          onRequestClose={this.closeDeletePersonModal}
+          className="delete-number-modal"
+          overlay="overlay"
+          contentLabel="Delete a Person Confirmation"
+        >
+          <div className="modal-lower">
+            <div className="delete-number-modal-subtitle">Are you sure you want to delete this person?</div>
+            <button className="button-yes"
+              onClick={(e) => {
+                this.deleteThePerson(e, this.props.person.id);
+              }}
+              type="button"
+            >Yes
+            </button>
+            <button className="button-no" onClick={this.closeDeletePersonModal} type="button">No</button>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={this.state.deleteGiftModal}
+            // onAfterOpen={afterOpenModal}
+          onRequestClose={this.closeDeleteGiftModal}
+          className="delete-number-modal"
+          overlay="overlay"
+          contentLabel="Delete a Tracking Number Confirmation"
+        >
+          <div className="modal-lower">
+            <div className="delete-number-modal-subtitle">Are you sure you want to delete this gift?</div>
+            <button className="button-yes"
+              onClick={(e) => {
+                this.deleteGift(e, this.props.person.id);
+              }}
+              type="button"
+            >Yes
+            </button>
+            <button className="button-no" onClick={this.closeDeleteGiftModal} type="button">No</button>
+          </div>
+        </Modal>
         <div className="name-cell">{this.props.person.name}</div>
         <div className="total-cell">{this.calculateTotal()}</div>
         <div className="buttons-cell">
@@ -187,7 +261,7 @@ class BudgetUserTableRow extends React.Component {
             className="trash"
             id="deletebutton"
             onClick={(e) => {
-              this.deleteThePerson(e, this.props.person.id);
+              this.openDeletePersonModal(e);
             }}
           />
           <FontAwesomeIcon icon={faChevronDown} className="trash" />

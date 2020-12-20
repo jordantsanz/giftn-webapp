@@ -118,13 +118,11 @@ export function addGiftToPerson(user, personId, gift) {
   };
 }
 
-export function deleteGiftFromPerson(user, personID, gift) {
+export function deleteGiftFromPerson(user, personID, giftID) {
   console.log('user', user);
   console.log('personID', personID);
-  console.log('gift', gift);
 
   return (dispatch) => {
-    const giftID = gift.id;
     axios.put(`${BACKEND_API}/personGift/${personID}`, { giftID });
 
     // now update redux
@@ -133,7 +131,7 @@ export function deleteGiftFromPerson(user, personID, gift) {
     for (let i = 0; i < newuser.people.length; i++) {
       if (newuser.people[i].id == personID) {
         for (const [key] of Object.entries(newuser.people[i].giftInfo)) {
-          if (key == gift.id) {
+          if (key == giftID) {
             delete newuser.people[i].giftInfo[key];
             console.log('delete');
           }

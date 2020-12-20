@@ -975,6 +975,10 @@ background: #F5DA77;
     outline: none;
 }
 
+.modal{
+    margin-left: 32.6vw;
+}
+
 .ReactModal__Overlay {
     opacity: 0;
     transition: opacity 200ms ease;
@@ -989,6 +993,24 @@ background: #F5DA77;
   .ReactModal__Overlay--before-close{
     opacity: 0;
     z-index: 2;
+  }
+
+  .modal-top{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      width: 90%;
+  }
+
+  .modal-x{
+    width: 19px !important;
+    height: 19px !important;
+    cursor: pointer;
+  }
+
+  #black-x{
+      color: $coal;
   }
 
 .title-blue-modal{
@@ -1024,14 +1046,13 @@ background: #F5DA77;
 
 .title-blue-modal::before{
     position: absolute;
+    content: "";
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    width: 194px;
-    height: 24px;
+    width: 245px;
     z-index: -1;
-    background: $rosy;
     -webkit-transform: rotate(6deg);
     -moz-transform: rotate(6deg);
     -o-transform: rotate(6deg);
@@ -1120,4 +1141,563 @@ text-align: center;
 /* navy night */
 
 color: #002863;
+}
+
+.delete-number-modal{
+    width: 447px;
+height: 223px;
+margin-left: 32.6vw;
+margin-top: 5vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
+/* rudolph */
+
+background: #F35849;
+}
+
+.modal{
+    margin-left: 32.6vw;
+margin-top: 5vh;
+}
+
+.delete-number-modal-subtitle{
+    font-family: $josefin;
+    width: 325px;
+height: 35px;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+.button-yes{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+width: 141px;
+height: 34px;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+outline: none;
+border: none;
+/* identical to box height */
+
+align-items: center;
+text-align: center;
+
+/* seafoam grinch */
+
+color: #81D7AD;
+
+/* navy night */
+
+background: #002863;
+
+}
+
+.button-no{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+
+width: 141px;
+height: 34px;
+
+
+/* seafoam grinch */
+
+background: #81D7AD;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+border: none;
+outline: none;
+text-align: center;
+
+/* navy night */
+
+color: #002863;
+}
+
+.modal-lower{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.add-person-modal{
+    width: 447px;
+height: 378px;
+
+/* navy night */
+
+background: #002863;
+margin-left: 32.6vw;
+position: absolute;
+margin-top: 5vh;
+z-index: 1;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;
+}
+
+.title-pink-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    position: relative;
+    
+    width: 245px;
+    
+    font-family: $abril;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    
+    /* rosy cheeks */
+    
+    color: #FF77E1;
+    
+    
+    /* white as winter snow */
+    
+    border: 4px solid #FFF5F5;
+    box-sizing: border-box;
+    background: #002863;
+    margin-bottom: 25px;
+}
+
+.title-pink-modal::before{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 245px;
+    z-index: -1;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+    -ms-transform: rotate(6deg);
+    transform: rotate(6deg);
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+    background: $rosy;
+}
+
+.adding-person-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.subtitle-modal-addperson{
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+width: 325px;
+height: 35px;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+.person-modal-input{
+    width: 300px;
+height: 39px;
+
+/* white as winter snow */
+
+border: 2px solid #FFF5F5;
+box-sizing: border-box;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+background: transparent;
+margin-bottom: 20px;
+
+
+
+/* five golden rings */
+
+color: #F5DA77;
+}
+
+.person-modal-input::placeholder{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* five golden rings */
+
+color: #F5DA77;
+}
+
+.button-adding-person{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+outline: none;
+border: none;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* navy night */
+
+color: #002863;
+width: 141px;
+height: 34px;
+
+/* rosy cheeks */
+
+background: #FF77E1;
+}
+
+#yellow-x{
+    color: $goldenrings;
+}
+
+.add-gift-modal{
+    width: 447px;
+    height: 378px;
+    
+    /* navy night */
+    
+    background: $seafoamgrinch;
+    margin-left: 32.6vw;
+    position: absolute;
+    margin-top: 5vh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.subtitle-modal-addgift{
+    font-family: $josefin;
+    width: 325px;
+height: 35px;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* coal in your stocking */
+
+color: #0E0B0B;
+}
+
+.adding-gift-revealed{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.add-gift-input{
+    width: 300px;
+height: 39px;
+margin-bottom: 10px;
+/* coal in your stocking */
+
+border: 2px solid #0E0B0B;
+box-sizing: border-box;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* rudolph */
+background: transparent;
+color: #F35849;
+}
+
+.add-gift-button{
+    width: 141px;
+height: 34px;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: inline-flex;
+align-items: center;
+border: none;
+outline: none;
+margin-bottom: 10px;
+text-align: center;
+justify-content: center;
+
+/* navy night */
+
+color: #002863;
+
+/* five golden rings */
+
+background: #F5DA77;
+}
+
+.add-gift-input::placeholder{
+    font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* rudolph */
+
+color: #F35849;
+}
+
+.title-yellow-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    position: relative;
+    
+    width: 245px;
+    
+    font-family: $abril;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    
+    /* rosy cheeks */
+    
+    color: $navynight;
+    
+    
+    /* white as winter snow */
+    
+    border: 4px solid #FFF5F5;
+    box-sizing: border-box;
+    background: $goldenrings;
+    margin-bottom: 25px;
+}
+
+.title-yellow-modal::before{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 245px;
+    z-index: -1;
+    -webkit-transform: rotate(6deg);
+    -moz-transform: rotate(6deg);
+    -o-transform: rotate(6deg);
+    -ms-transform: rotate(6deg);
+    transform: rotate(6deg);
+    transform: rotate(6deg);
+    margin-bottom: 20px;
+    background: $navynight;
+}
+
+.budget-modal{
+    width: 433px;
+    height: 376px;
+    
+    /* noble fir */
+    
+    background: $noblefir;
+    
+    /* navy night */
+    
+    margin-left: 32.6vw;
+    position: absolute;
+    margin-top: 5vh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.subtitle-modal-budget{
+    font-family: $josefin;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 18px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* white as winter snow */
+
+color: #FFF5F5;
+}
+
+.budget-modal-input{
+    width: 300px;
+height: 109px;
+background: transparent;
+font-family: $abril;
+font-style: normal;
+font-weight: normal;
+font-size: 72px;
+line-height: 97px;
+display: flex;
+align-items: center;
+text-align: center;
+
+/* seafoam grinch */
+
+color: #81D7AD;
+/* white as winter snow */
+
+border: 5px solid #FFF5F5;
+box-sizing: border-box;
+}
+
+.button-adding-budget{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+outline: none;
+border: none;
+
+width: 179px;
+height: 34px;
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+align-items: center;
+text-align: center;
+
+/* navy night */
+margin-top: 12px;
+color: #002863;
+
+/* rosy cheeks */
+
+background: #FF77E1;
+}
+
+.edit-budget{
+    display: inline-flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+width: 120px;
+height: 34px;
+
+font-family: $josefin;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 18px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+text-align: center;
+border: none;
+outline: none;
+
+/* navy night *
+
+/* five golden rings */
+
+background: #F5DA77;
+}
+
+.edit-budget-section{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 64px;
+    margin-top: 33px;
 }

@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable react/no-unused-state */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/prefer-stateless-function */
@@ -6,6 +8,9 @@
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
 import $ from 'jquery';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import BudgetUserTableRow from './BudgetUserTableRow';
 import { addGiftToPerson, addPerson } from '../actions';
@@ -20,24 +25,9 @@ class BudgetTable extends Component {
       giftName: '',
       price: '',
       link: '',
-      addingGift: false,
+      giftModal: false,
+      personModal: false,
     };
-  }
-
-  addPersonReveal = () => {
-    this.setState((prevState) => {
-      return {
-        addingPerson: !prevState.addingPerson,
-      };
-    });
-  }
-
-  addGiftReveal = () => {
-    this.setState((prevState) => {
-      return {
-        addingGift: !prevState.addingGift,
-      };
-    });
   }
 
   grabName = (e) => {
@@ -86,6 +76,7 @@ class BudgetTable extends Component {
       addingPerson: false,
     });
     $('input').val('');
+    this.closePersonModal();
   }
 
   submitGift = () => {
@@ -116,24 +107,7 @@ class BudgetTable extends Component {
       person: '',
       addingGift: '',
     });
-  }
-
-  addPersonSectionRender = () => {
-    if (this.state.addingPerson) {
-      return (
-        <div className="adding-person-revealed">
-          <input type="input" placeholder="person" onChange={this.grabName} />
-          <input type="input" placeholder="gift" onChange={this.grabGift} />
-          <input type="input" placeholder="price" onChange={this.grabPrice} />
-          <input type="input" placeholder="link (optional)" onChange={this.grabLink} />
-          <button type="button" onClick={this.submitPerson}> Add person! </button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="blank" />
-      );
-    }
+    this.closeGiftModal();
   }
 
   peopleOptions = () => {
@@ -142,24 +116,29 @@ class BudgetTable extends Component {
     });
   }
 
-  addGiftSectionRender = () => {
-    if (this.state.addingGift) {
-      return (
-        <div className="adding-gift-revealed">
-          <input type="input" placeholder="gift name" onChange={this.grabGift} />
-          <input type="input" placeholder="price" onChange={this.grabPrice} />
-          <input type="input" placeholder="link (optional)" onChange={this.grabLink} />
-          <select type="select" id="dropdown-add-gift">
-            {this.props.user.people.map((person) => {
-              return <option key={person.name} value={person.name}>{person.name}</option>;
-            })}
-          </select>
-          <button type="button" onClick={this.submitGift}>Add gift!</button>
-        </div>
-      );
-    } else {
-      return <div className="blank" />;
-    }
+  openPersonModal = () => {
+    this.setState({
+      personModal: true,
+    });
+  }
+
+  closePersonModal = () => {
+    this.setState({
+      personModal: false,
+    });
+  }
+
+  openGiftModal = () => {
+    this.setState({
+      giftModal: true,
+
+    });
+  }
+
+  closeGiftModal = () => {
+    this.setState({
+      giftModal: false,
+    });
   }
 
   render() {
@@ -168,15 +147,62 @@ class BudgetTable extends Component {
         <div className="table-container">
           <div className="button-long-div">
             <div className="button-holder-table">
-              <button className="button" id="add-person-button" type="button" onClick={this.addPersonReveal}>Add Person</button>
-              <button className="button" id="add-gift-button" type="button" onClick={this.addGiftReveal}>Add Gift</button>
+              <button className="button" id="add-person-button" type="button" onClick={this.openPersonModal}>Add Person</button>
+              <button className="button" id="add-gift-button" type="button" onClick={this.openGiftModal}>Add Gift</button>
             </div>
           </div>
           <div className="table-holder">
             {this.props.people.map((person) => <BudgetUserTableRow person={person} />)}
           </div>
-          {this.addPersonSectionRender()}
-          {this.addGiftSectionRender()}
+          <Modal
+            isOpen={this.state.personModal}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={this.closePersonModal}
+            className="Modal modal add-person-modal"
+            overlay="overlay"
+            contentLabel="Add a Tracking Number"
+          >
+            <div className="modal-top">
+              <FontAwesomeIcon className="modal-x" id="yellow-x" role="button" onClick={this.closePersonModal} icon={faTimes} />
+            </div>
+            <div className="title-pink-modal">Add Person</div>
+            <div className="subtitle-modal-addperson">Add a person to your Gift List to start buying their gifts.</div>
+            <div className="adding-person-section">
+              <input type="input" placeholder="Name" className="person-modal-input" onChange={this.grabName} />
+              <input type="input" placeholder="Email" className="person-modal-input" /> {/* Email grab on person? */}
+              <button type="button" className="button-adding-person" onClick={this.submitPerson}> Add to my list </button>
+            </div>
+          </Modal>
+          <Modal
+            isOpen={this.state.giftModal}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={this.closeGiftModal}
+            className="Modal modal add-gift-modal"
+            overlay="overlay"
+            contentLabel="Add a Tracking Number"
+          >
+            <div className="modal-top">
+              <FontAwesomeIcon className="modal-x" id="black-x" role="button" onClick={this.closeGiftModal} icon={faTimes} />
+            </div>
+            <div className="title-yellow-modal">Add Gift</div>
+            <div className="subtitle-modal-addgift">Add a gift from Amazon for a person on your Gift List.</div>
+            <div className="adding-gift-revealed">
+              <input type="input" className="add-gift-input" placeholder="Amazon Link" onChange={this.grabLink} />
+              <input type="input" className="add-gift-input" placeholder="Name (optional)" onChange={this.grabGift} />
+              <input type="input"
+                className="add-gift-input"
+                placeholder="Price"
+                onChange={this.grabPrice}
+              />
+              <select type="select" className="add-gift-input" placeholder="Person" id="dropdown-add-gift">
+                {this.props.user.people.map((person) => {
+                  return <option key={person.name} value={person.name}>{person.name}</option>;
+                })}
+              </select>
+              <button type="button" className="add-gift-button" onClick={this.submitGift}>Add to my list</button>
+            </div>
+          </Modal>
+
         </div>
       </div>
     );

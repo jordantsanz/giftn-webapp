@@ -5,8 +5,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-modal';
 import $ from 'jquery';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import TrackingUserTableRow from './TrackingUserTableRow';
 import { addTrackingNumber } from '../actions';
 
@@ -55,6 +57,8 @@ class TrackingTable extends Component {
       trackingNumber: '',
       note: '',
     });
+
+    this.closeAddNumberModal();
   }
 
   openAddNumberModal = () => {
@@ -78,13 +82,6 @@ class TrackingTable extends Component {
         trackingNumber: trackingNum,
         note: trackingObj.note,
         person: trackingObj.person,
-      });
-    }
-    if (numberArray.length == 1) {
-      numberArray.push({
-        trackingNumber: 'blankblankblank',
-        note: '',
-        person: '',
       });
     }
     return numberArray;
@@ -114,7 +111,7 @@ class TrackingTable extends Component {
             contentLabel="Add a Tracking Number"
           >
             <div className="modal-top">
-              <div className="modal-x" role="button" onClick={this.closeAddNumberModal}>X</div>
+              <FontAwesomeIcon className="modal-x" id="black-x" role="button" onClick={this.closeAddNumberModal} icon={faTimes} />
             </div>
             <div className="title-blue-modal">Add Tracking Number</div>
             <div className="subtitle-modal-addnumber">Add a tracking number to your package tracker table.</div>

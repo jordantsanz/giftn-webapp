@@ -4,8 +4,12 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Modal from 'react-modal';
 import * as am4core from '@amcharts/amcharts4/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as am4charts from '@amcharts/amcharts4/charts';
+import { updateBudget } from '../actions';
 // import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import BudgetTable from './BudgetTable';
 import NavBar from './NavBar';
@@ -16,6 +20,8 @@ class BudgetHub extends Component {
     this.state = {
       gauge: false,
       gauge2: false,
+      budgetModal: false,
+      budget: '',
     };
   }
 
@@ -272,6 +278,34 @@ class BudgetHub extends Component {
         }
       };
 
+      openBudgetModal = () => {
+        this.setState({
+          budgetModal: true,
+        });
+      }
+
+      closeBudgetModal = () => {
+        this.setState({
+          budgetModal: false,
+        });
+      }
+
+      submitBudget = () => {
+        if (parseInt(this.state.budget, 10) > 0) {
+          this.props.updateBudget(this.props.user, this.state.budget);
+          this.setState({
+            budget: '',
+          });
+        }
+        this.closeBudgetModal();
+      }
+
+      grabBudget = (e) => {
+        this.setState({
+          budget: e.target.value,
+        });
+      }
+
       render() {
         return (
           <div className="homepage-outer">
@@ -283,6 +317,30 @@ class BudgetHub extends Component {
                 <div className="chartdiv2" id="chartdiv2" />
               </div>
             </div>
+            <div className="edit-budget-section">
+              <button className="edit-budget" type="button" onClick={this.openBudgetModal}>Edit budget</button>
+            </div>
+            <Modal
+              isOpen={this.state.budgetModal}
+            // onAfterOpen={afterOpenModal}
+              onRequestClose={this.closeBudgetModal}
+              className="Modal modal budget-modal"
+              overlay="overlay"
+              contentLabel="Add a Tracking Number"
+            >
+              <div className="modal-top">
+                <FontAwesomeIcon className="modal-x" id="yellow-x" role="button" onClick={this.closeBudgetModal} icon={faTimes} />
+              </div>
+              <div className="title-pink-modal">Edit Budget</div>
+              <div className="subtitle-modal-budget">Edit your holiday spending budget.</div>
+              <div className="adding-person-section">
+                <div className="budget-box">
+                  <div className="budget-dollar-sign">$</div>
+                  <input className="budget-input" id="budget-input" onChange={this.grabBudget} placeholder="1000" />
+                </div>
+                <button type="button" className="button-adding-budget" onClick={this.submitBudget}> Update my budget </button>
+              </div>
+            </Modal>
             <div className="gift-section">
               <h1 className="title">Gift List</h1>
               <BudgetTable people={this.props.user.people} />
@@ -298,4 +356,4 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default connect(mapStateToProps, null)(BudgetHub);
+export default connect(mapStateToProps, { updateBudget })(BudgetHub);
