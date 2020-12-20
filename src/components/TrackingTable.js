@@ -163,7 +163,7 @@ class TrackingTable extends Component {
             </select>
             <input autoComplete="off" className="tracking-number-input" placeholder="Tracking Number" onChange={this.grabNumber} />
             <input autoComplete="off" className="note-input" placeholder="Purchase Description" onChange={this.grabNote} />
-            <select type="select" id="dropdown">
+            <select className="modal-dropdown" type="select" id="dropdown">
               {this.props.user.people.map((person) => {
                 return <option key={person.name} value={person.name}>{person.name}</option>;
               })}

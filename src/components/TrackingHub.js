@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TrackingTable from './TrackingTable';
 import NavBar from './NavBar';
-import lightgreen from '../../images/lightgreen.png';
 
 class TrackingHub extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class TrackingHub extends Component {
   render() {
     return (
       <div className="background">
-        <img alt="background" className="page-holder" id="tracking-hub-page-holder" src={lightgreen} />
+        {/* <img alt="background" className="page-holder" id="tracking-hub-page-holder" src={lightgreen} /> */}
         <NavBar />
         <div className="title-pink">Your Packages</div>
         <TrackingTable numbers={this.props.user.trackingNumbers} />
