@@ -7,3 +7,6 @@ Enter in your budget. Then input the people you're thinking about this holiday s
 
 ## Services
 This app uses Google authentication and connects to [**giftn's** API](https://github.com/catherinedparnell/giftn-api) where it engages with Google Cloud Firestore database.
+
+## Check it out
+Try out giftn for yourself at [http://giftn.surge.sh/](http://giftn.surge.sh/). Happy shopping!
